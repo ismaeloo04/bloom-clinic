@@ -908,6 +908,22 @@ function linkDeviceSheet() {
     .catch(() => { qr.textContent = 'الـ QR محتاج نت — استخدم اللينك'; });
 }
 
+/* ====================== عن الأبلكيشن (Graficoo Studio) ====================== */
+const APP_VERSION = '1.0';
+function aboutSheet() {
+  const d = el('div', 'about');
+  d.innerHTML = `
+    <div class="gl"><img src="img/graficoo-white.png" alt="Graficoo Studio"></div>
+    <p><b>Bloom Files</b> — ملف المريض الإلكتروني لعيادة Bloom لطب الأسنان</p>
+    <p>تصميم وتطوير <b>Graficoo Studio</b></p>
+    <div class="links">
+      <a href="https://wa.me/201150704840" target="_blank" rel="noopener">واتساب</a>
+      <a href="https://www.instagram.com/graficoo_04/" target="_blank" rel="noopener">إنستجرام</a>
+    </div>
+    <small>الإصدار ${APP_VERSION}</small>`;
+  openSheet('عن الأبلكيشن', d, [['تمام', 'no', () => {}]]);
+}
+
 /* ====================== تشغيل ====================== */
 async function boot() {
   await DB.open();
@@ -920,6 +936,7 @@ async function boot() {
   };
   $('#btnClose').onclick = () => { if (ui.p) DB.put(ui.p); ui.p = null; showHome(); };
   $('#btnPrint').onclick = printFile;
+  $('#btnCredit').onclick = aboutSheet;
   $('#btnDelete').onclick = deleteFile;
   $('#btnZoom').onclick = () => { ui.zoom = ui.zoom > 1 ? 1 : 1.8; $('#btnZoom').textContent = ui.zoom > 1 ? '⊖' : '⊕'; layout(); };
   $('#btnBackup').onclick = backup;

@@ -1,0 +1,236 @@
+// ملف متولّد — عدّل app/sync-core.js أو apps-script/server.gs وشغّل source/build_gs.py
+/* Bloom Clinic — منطق الدمج المشترك بين الأبلكيشن والسيرفر (Apps Script)
+   كل تعديل بيتسجل وقته في record._t[key] (key = اسم الخانة، أو "procs.3" لسطر، أو "teeth.UR5" لسنة).
+   الدمج: لكل خانة، الأحدث هو اللي بيكسب — فتعديلين على نفس الملف من جهازين مختلفين ما بيمسحوش بعض. */
+var SyncCore = (function () {
+  function clone(v) { return v === undefined ? undefined : JSON.parse(JSON.stringify(v)); }
+  function getK(o, k) {
+    var ps = k.split('.');
+    for (var i = 0; i < ps.length; i++) { if (o == null) return undefined; o = o[ps[i]]; }
+    return o;
+  }
+  function setK(o, k, v) {
+    var ps = k.split('.'), a = o;
+    for (var i = 0; i < ps.length - 1; i++) {
+      var nextIsIndex = /^\d+$/.test(ps[i + 1]);
+      if (a[ps[i]] == null || typeof a[ps[i]] !== 'object') a[ps[i]] = nextIsIndex ? [] : {};
+      a = a[ps[i]];
+    }
+    var last = ps[ps.length - 1];
+    if (v === undefined) { if (Array.isArray(a)) a[last] = {}; else delete a[last]; }
+    else a[last] = v;
+  }
+  /** يدمج نسختين من نفس ملف المريض */
+  function merge(a, b) {
+    if (!a) return clone(b);
+    if (!b) return clone(a);
+    var ta = a._t || {}, tb = b._t || {};
+    var out = clone((b.updatedAt || 0) > (a.updatedAt || 0) ? b : a);
+    out._t = {};
+    var keys = {}, k;
+    for (k in ta) keys[k] = 1;
+    for (k in tb) keys[k] = 1;
+    var sorted = Object.keys(keys).sort(function (x, y) { return x.split('.').length - y.split('.').length; });
+    for (var i = 0; i < sorted.length; i++) {
+      k = sorted[i];
+      var useB = (tb[k] || 0) > (ta[k] || 0);
+      setK(out, k, clone(getK(useB ? b : a, k)));
+      out._t[k] = Math.max(ta[k] || 0, tb[k] || 0);
+    }
+    ['procs', 'pays'].forEach(function (f) {
+      if (Array.isArray(out[f])) for (var j = 0; j < out[f].length; j++) if (out[f][j] == null) out[f][j] = {};
+    });
+    out.updatedAt = Math.max(a.updatedAt || 0, b.updatedAt || 0);
+    delete out._dirty;
+    return out;
+  }
+  return { merge: merge, getK: getK, setK: setK, clone: clone };
+})();
+if (typeof module !== 'undefined') module.exports = SyncCore;
+
+/* Bloom Clinic — سيرفر المزامنة (Google Apps Script + Google Sheet)
+   كل مريض = سطر في شيت "Patients". الأعمدة الأولى للقراءة (رقم الملف / الاسم / الموبايل)
+   والباقي = بيانات الملف كاملة (JSON) مقسومة على كذا خانة. */
+
+var CHUNK = 40000;      // حد الخانة في جوجل شيت 50 ألف حرف
+var MAXCHUNKS = 30;     // يكفي ~1.2 مليون حرف للملف الواحد
+var PAGE = 120;         // عدد الملفات في كل رد
+var HEAD = ['id', 'rev', 'آخر تعديل', 'رقم الملف', 'الاسم', 'الموبايل', 'محذوف'];
+
+/* ---------- المنطق (نفسه بيتجرب على الجهاز بسيرفر تجريبي) ---------- */
+function handle_(body, store, props) {
+  if (!body || !props.get('SYNC_KEY') || body.key !== props.get('SYNC_KEY')) return { ok: false, error: 'مفتاح المزامنة غلط' };
+  if (body.op === 'ping') return { ok: true, now: Date.now() };
+  if (body.op !== 'sync') return { ok: false, error: 'طلب مش معروف' };
+  var rev = Number(props.get('REV') || 0);
+  var push = body.push || [];
+  for (var i = 0; i < push.length; i++) {
+    var rec = push[i];
+    if (!rec || !rec.id) continue;
+    var merged = SyncCore.merge(store.get(rec.id), rec);
+    rev++;
+    store.put(merged, rev);
+  }
+  props.set('REV', String(rev));
+  var changed = store.since(Number(body.since || 0));
+  var page = changed.slice(0, PAGE);
+  var more = changed.length > PAGE;
+  return {
+    ok: true,
+    pull: page.map(function (x) { return store.get(x.id); }),
+    cursor: more ? page[page.length - 1].rev : rev,
+    more: more,
+  };
+}
+
+/* ---------- Google Sheet ---------- */
+function doPost(e) {
+  var lock = LockService.getScriptLock();
+  var out;
+  try {
+    lock.waitLock(25000);
+    out = handle_(JSON.parse(e.postData.contents), sheetStore_(), scriptProps_());
+  } catch (err) {
+    out = { ok: false, error: String(err && err.message || err) };
+  } finally {
+    try { lock.releaseLock(); } catch (_) {}
+  }
+  return ContentService.createTextOutput(JSON.stringify(out)).setMimeType(ContentService.MimeType.JSON);
+}
+function scriptProps_() {
+  var p = PropertiesService.getScriptProperties();
+  return { get: function (k) { return p.getProperty(k); }, set: function (k, v) { p.setProperty(k, v); } };
+}
+
+function sheet_() {
+  var id = PropertiesService.getScriptProperties().getProperty('SHEET_ID');
+  return SpreadsheetApp.openById(id).getSheetByName('Patients');
+}
+
+function sheetStore_() {
+  var sh = sheet_();
+  var last = sh.getLastRow();
+  var idx = {};
+  if (last > 1) {
+    var v = sh.getRange(2, 1, last - 1, 2).getValues();
+    for (var i = 0; i < v.length; i++) if (v[i][0]) idx[v[i][0]] = { row: i + 2, rev: Number(v[i][1]) || 0 };
+  }
+  var cache = {};
+  return {
+    get: function (id) {
+      if (cache[id]) return cache[id];
+      var x = idx[id];
+      if (!x) return null;
+      var parts = sh.getRange(x.row, HEAD.length + 1, 1, MAXCHUNKS).getValues()[0];
+      var s = parts.map(function (c) { return String(c || '').slice(1); }).join('');
+      return (cache[id] = s ? JSON.parse(s) : null);
+    },
+    put: function (rec, rev) {
+      var s = JSON.stringify(rec);
+      var chunks = [];
+      for (var i = 0; i < s.length; i += CHUNK) chunks.push('~' + s.slice(i, i + CHUNK)); // '~' عشان الشيت ما يفتكرش البيانات معادلة
+      if (chunks.length > MAXCHUNKS) throw new Error('الملف ' + rec.id + ' كبير زيادة');
+      while (chunks.length < MAXCHUNKS) chunks.push('');
+      var row = idx[rec.id] ? idx[rec.id].row : (last = Math.max(last, 1) + 1);
+      sh.getRange(row, 1, 1, HEAD.length + MAXCHUNKS).setValues([[
+        rec.id, rev, new Date(rec.updatedAt || Date.now()), String(rec.fileNo || ''), rec.name || '', String(rec.mobile || ''), rec.deleted ? 'نعم' : '',
+      ].concat(chunks)]);
+      idx[rec.id] = { row: row, rev: rev };
+      cache[rec.id] = rec;
+    },
+    since: function (s) {
+      return Object.keys(idx).map(function (id) { return { id: id, rev: idx[id].rev }; })
+        .filter(function (x) { return x.rev > s; })
+        .sort(function (a, b) { return a.rev - b.rev; });
+    },
+  };
+}
+
+/* ---------- التجهيز ----------
+   مدير العيادة بيلصق الكود ويعمل Deploy كـ Web app — وأول ما يفتح لينك الـ Web app:
+   السيرفر بيجهز نفسه (شيت البيانات + مفتاح سري) ويعرض «لينك الربط» لمدة ساعتين.
+   بعد كده اللينك ما بيظهرش لأي حد؛ ولو اتنسى: من المحرر شغّل showSetupLink. */
+var APP_URL = 'https://ismaeloo04.github.io/bloom-clinic/';
+var SHOW_MS = 2 * 60 * 60 * 1000;
+
+function setup_() {
+  var props = PropertiesService.getScriptProperties();
+  if (!props.getProperty('SHEET_ID')) {
+    var ss = SpreadsheetApp.create('Bloom Clinic — بيانات ملفات المرضى');
+    var sh = ss.getSheets()[0];
+    sh.setName('Patients');
+    var cols = HEAD.length + MAXCHUNKS;
+    if (sh.getMaxColumns() < cols) sh.insertColumnsAfter(sh.getMaxColumns(), cols - sh.getMaxColumns());
+    var head = HEAD.slice();
+    for (var i = 1; i <= MAXCHUNKS; i++) head.push('data' + i);
+    sh.getRange(1, 1, 1, cols).setValues([head]).setFontWeight('bold');
+    sh.setFrozenRows(1);
+    sh.getRange(1, HEAD.length + 1, sh.getMaxRows(), MAXCHUNKS).setNumberFormat('@');
+    sh.hideColumns(HEAD.length + 1, MAXCHUNKS);
+    sh.hideColumns(1, 2);
+    sh.setRightToLeft(true);
+    props.setProperty('SHEET_ID', ss.getId());
+  }
+  if (!props.getProperty('SYNC_KEY')) {
+    props.setProperty('SYNC_KEY', Utilities.getUuid().replace(/-/g, '') + Utilities.getUuid().replace(/-/g, ''));
+    props.setProperty('KEY_AT', String(Date.now()));
+  }
+  if (!props.getProperty('REV')) props.setProperty('REV', '0');
+}
+
+function setupLink_() {
+  var props = PropertiesService.getScriptProperties();
+  var code = Utilities.base64EncodeWebSafe(JSON.stringify({ u: ScriptApp.getService().getUrl(), k: props.getProperty('SYNC_KEY') }), Utilities.Charset.UTF_8);
+  return APP_URL + '#sync=' + code;
+}
+
+function doGet() {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(25000);
+  try {
+    setup_();
+    var props = PropertiesService.getScriptProperties();
+    var fresh = Date.now() - Number(props.getProperty('KEY_AT') || 0) < SHOW_MS;
+    var sheetUrl = 'https://docs.google.com/spreadsheets/d/' + props.getProperty('SHEET_ID');
+    return HtmlService.createHtmlOutput(setupPage_(fresh ? setupLink_() : '', sheetUrl))
+      .setTitle('Bloom Clinic — السيرفر')
+      .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+  } finally { lock.releaseLock(); }
+}
+
+function setupPage_(link, sheetUrl) {
+  var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
+  var body = link
+    ? '<h1>✓ السيرفر اتجهز</h1>' +
+      '<p>ده <b>لينك الربط</b>. افتحه مرة واحدة على كل جهاز هيشتغل على الملفات (الكمبيوتر والموبايلات). أسهل طريقة: ابعته لنفسك على واتساب وافتحه من كل جهاز.</p>' +
+      '<a class="btn" target="_blank" href="' + esc(link) + '">افتح الأبلكيشن واربط الجهاز ده</a>' +
+      '<textarea readonly onclick="this.select()">' + esc(link) + '</textarea>' +
+      '<button onclick="var t=document.querySelector(\'textarea\');t.select();document.execCommand(\'copy\');this.textContent=\'✓ اتنسخ\'">انسخ اللينك</button>' +
+      '<p class="warn">⚠ اللينك ده زي مفتاح العيادة: أي حد معاه يقدر يشوف ملفات المرضى. ما تنشرهوش، وابعته بس لأجهزة العيادة. الصفحة دي هتبطل تعرضه بعد ساعتين.</p>'
+    : '<h1>✓ السيرفر شغال</h1><p>لينك الربط مش بيظهر هنا تاني عشان الأمان.</p>' +
+      '<p>لو محتاجه: من محرر Apps Script اختار الدالة <b>showSetupLink</b> ودوس Run، وهيظهر في السجل (Execution log).<br>' +
+      'ولو موبايل ضاع: شغّل <b>resetKey</b> (كل الأجهزة هتحتاج تتربط تاني بلينك جديد).</p>';
+  return '<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><style>' +
+    'body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#1c364f;color:#fff;display:flex;justify-content:center;padding:28px 16px}' +
+    '.c{max-width:560px;width:100%;background:#0b2033;border-radius:18px;padding:26px;box-shadow:0 10px 30px #0006}' +
+    'h1{margin:0 0 12px;font-size:22px;color:#bfe3dc}p{line-height:1.9;font-size:15px;color:#d9e4ea}' +
+    '.btn{display:block;text-align:center;background:#618581;color:#fff;text-decoration:none;font-weight:bold;padding:14px;border-radius:12px;font-size:17px;margin:16px 0}' +
+    'textarea{width:100%;box-sizing:border-box;height:90px;direction:ltr;font-size:12px;border-radius:10px;border:0;padding:10px}' +
+    'button{margin-top:8px;background:#13304a;color:#fff;border:1px solid #ffffff33;border-radius:10px;padding:10px 16px;font-size:14px;cursor:pointer}' +
+    '.warn{background:#3a2a10;color:#ffd99a;border-radius:10px;padding:10px 12px;font-size:13.5px}.s{font-size:13px;color:#9fb3bf}a.s{color:#9fd0c6}' +
+    '</style></head><body><div class="c">' + body +
+    '<p class="s">البيانات محفوظة في شيت على حساب العيادة: <a class="s" target="_blank" href="' + esc(sheetUrl) + '">افتح الشيت</a></p>' +
+    '</div></body></html>';
+}
+
+/** لو لينك الربط اتنسى: Run ← هيظهر في Execution log */
+function showSetupLink() { setup_(); Logger.log(setupLink_()); }
+
+/** لو جهاز ضاع: مفتاح جديد (كل الأجهزة لازم تتربط تاني) */
+function resetKey() {
+  var props = PropertiesService.getScriptProperties();
+  props.deleteProperty('SYNC_KEY');
+  setup_();
+  Logger.log('مفتاح جديد. لينك الربط الجديد:');
+  Logger.log(setupLink_());
+}

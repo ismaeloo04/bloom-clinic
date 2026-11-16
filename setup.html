@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تجهيز المزامنة — Bloom Clinic</title>
+<meta name="theme-color" content="#1c364f">
+<link rel="icon" href="icons/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0b2033;--cloud:#1c364f;--sage:#618581;--ink:#0b2033;--muted:#5d6f7c;--line:#dfe5ea}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Tajawal',Tahoma,sans-serif;background:#eef2f5;color:var(--ink);line-height:1.85}
+  header{background:var(--cloud);color:#fff;padding:26px 16px 70px;text-align:center}
+  header img{height:54px}
+  header h1{margin:14px 0 4px;font-size:24px}
+  header p{margin:0;color:#c9d6de;font-size:15px}
+  main{max-width:760px;margin:-50px auto 40px;padding:0 16px}
+  .card{background:#fff;border-radius:18px;padding:22px 22px 18px;box-shadow:0 6px 24px #0b20331a;margin-bottom:14px}
+  .intro{font-size:15.5px}
+  .intro b{color:var(--cloud)}
+  .step{display:flex;gap:14px}
+  .num{flex:0 0 38px;height:38px;border-radius:50%;background:var(--cloud);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px}
+  .step h2{margin:4px 0 6px;font-size:18px}
+  .step p,.step li{font-size:15px;margin:4px 0}
+  .step ol,.step ul{padding-inline-start:20px;margin:6px 0}
+  .k{display:inline-block;background:#eef2f5;border:1px solid var(--line);border-radius:7px;padding:0 7px;font-size:13.5px;direction:ltr;unicode-bidi:isolate;font-family:Segoe UI,Arial,sans-serif;font-weight:600;color:#1c364f}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--sage);color:#fff;text-decoration:none;border:0;border-radius:12px;padding:12px 18px;font:700 16px 'Tajawal',sans-serif;cursor:pointer;margin:8px 0 4px}
+  .btn:hover{background:#6f9692}
+  .btn.navy{background:var(--cloud)}
+  .note{background:#fff7e6;border:1px solid #f3dca6;border-radius:12px;padding:10px 14px;font-size:14px;color:#6b4e12;margin-top:10px}
+  .ok{background:#e9f5f2;border:1px solid #bfe0d8;color:#1f5a4f}
+  .muted{color:var(--muted);font-size:13.5px}
+  #copied{color:#1f7a5f;font-weight:700;margin-inline-start:8px;opacity:0;transition:.3s}
+  #copied.on{opacity:1}
+  .devices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+  .devices div{background:#f4f7f9;border-radius:12px;padding:10px 12px;font-size:14px}
+  .devices b{display:block;color:var(--cloud);margin-bottom:2px}
+  @media (max-width:640px){.devices{grid-template-columns:1fr}.step{gap:10px}.num{flex-basis:32px;height:32px;font-size:16px}}
+</style>
+</head>
+<body>
+<header>
+  <img src="img/logo-white.png" alt="BLOOM Dental Clinic">
+  <h1>تجهيز مزامنة ملفات المرضى</h1>
+  <p>خطوات لمدير العيادة — مرة واحدة بس، حوالي 5 دقايق، من الكمبيوتر</p>
+</header>
+<main>
+  <div class="card intro">
+    عشان ملفات المرضى تبقى <b>واحدة على الكمبيوتر والموبايلات</b>، محتاجين «سيرفر» صغير مجاني على <b>حساب جوجل بتاع العيادة</b>.
+    البيانات بتتحفظ في شيت على درايف العيادة، ومحدش يقدر يوصلها غير الأجهزة اللي معاها «لينك الربط».
+    <div class="note">اعمل الخطوات دي من <b>كمبيوتر</b> على متصفح <b>Google Chrome</b>، وتأكد إنك داخل بـ <b>جيميل العيادة</b> (مش جيميل شخصي).</div>
+  </div>
+
+  <div class="card step"><div class="num">1</div><div>
+    <h2>افتح مشروع جديد في Google Apps Script</h2>
+    <a class="btn navy" href="https://script.google.com/create" target="_blank" rel="noopener">افتح Apps Script ↗</a>
+    <p>لو طلب تسجيل دخول، ادخل بجيميل العيادة. هيفتحلك محرر فيه كود صغير مكتوب.</p>
+    <p class="muted">اختياري: دوس على اسم المشروع فوق <span class="k">Untitled project</span> وسمّيه <span class="k">Bloom Clinic Server</span>.</p>
+  </div></div>
+
+  <div class="card step"><div class="num">2</div><div>
+    <h2>الصق كود السيرفر</h2>
+    <button class="btn" id="copyBtn">📋 انسخ كود السيرفر</button><span id="copied">✓ اتنسخ</span>
+    <ol>
+      <li>في المحرر دوس جوه الكود، وبعدين <span class="k">Ctrl + A</span> وبعدها <span class="k">Delete</span> (يمسح الموجود).</li>
+      <li>الصق الكود: <span class="k">Ctrl + V</span>.</li>
+      <li>احفظ: <span class="k">Ctrl + S</span>.</li>
+    </ol>
+  </div></div>
+
+  <div class="card step"><div class="num">3</div><div>
+    <h2>انشره كـ Web app</h2>
+    <ol>
+      <li>فوق في ركن الشاشة دوس الزرار الأزرق <span class="k">Deploy</span> (نشر) ← <span class="k">New deployment</span> (عملية نشر جديدة).</li>
+      <li>جنب <span class="k">Select type</span> دوس على علامة الترس ⚙ واختار <span class="k">Web app</span> (تطبيق ويب).</li>
+      <li><span class="k">Execute as</span> (التنفيذ باسم): اختار <span class="k">Me</span> (أنا).</li>
+      <li><span class="k">Who has access</span> (من يمكنه الوصول): اختار <span class="k">Anyone</span> (أي شخص).</li>
+      <li>دوس <span class="k">Deploy</span> (نشر).</li>
+    </ol>
+  </div></div>
+
+  <div class="card step"><div class="num">4</div><div>
+    <h2>اسمح للسيرفر يستخدم الشيت</h2>
+    <ol>
+      <li>هيطلب <span class="k">Authorize access</span> ← دوس عليه واختار جيميل العيادة.</li>
+      <li>هتظهر رسالة <span class="k">Google hasn’t verified this app</span> — ده طبيعي لأن الكود خاص بالعيادة ومش منشور لحد.</li>
+      <li>دوس <span class="k">Advanced</span> (خيارات متقدمة) ← <span class="k">Go to Bloom Clinic Server (unsafe)</span> ← <span class="k">Allow</span> (سماح).</li>
+    </ol>
+    <p class="muted">السيرفر بيطلب صلاحية واحدة بس: إنه يعمل ويعدّل شيت ملفات المرضى على درايف العيادة.</p>
+  </div></div>
+
+  <div class="card step"><div class="num">5</div><div>
+    <h2>افتح لينك الـ Web app</h2>
+    <p>بعد النشر هيظهر <span class="k">Web app URL</span> — دوس عليه (أو انسخه وافتحه في تاب جديد).</p>
+    <p>هتفتح صفحة كحلي مكتوب فيها <b>«✓ السيرفر اتجهز»</b>، وفيها <b>لينك الربط</b>. في نفس اللحظة اتعمل في درايف العيادة شيت اسمه «Bloom Clinic — بيانات ملفات المرضى».</p>
+    <div class="note">الصفحة دي بتعرض لينك الربط لمدة <b>ساعتين بس</b> عشان الأمان — كمّل الخطوة الجاية على طول.</div>
+  </div></div>
+
+  <div class="card step"><div class="num">6</div><div>
+    <h2>اربط كل أجهزة العيادة</h2>
+    <p>دوس <b>«افتح الأبلكيشن واربط الجهاز ده»</b> على الكمبيوتر. وبعدين ابعت لينك الربط لنفسك على واتساب وافتحه من كل موبايل هيشتغل على الملفات.</p>
+    <p>بعد ما الأبلكيشن يفتح ثبّته على الجهاز:</p>
+    <div class="devices">
+      <div><b>أندرويد (Chrome)</b>⋮ ← «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»</div>
+      <div><b>آيفون (Safari)</b>زرار المشاركة ⬆ ← «إضافة إلى الشاشة الرئيسية»</div>
+      <div><b>الكمبيوتر (Chrome / Edge)</b>علامة التثبيت ⊕ في آخر شريط العنوان</div>
+    </div>
+    <div class="note ok">✓ خلاص — أي ملف يتكتب أو يتعدل على جهاز بيظهر على الباقيين لوحده، وحتى لو النت قطع الشغل بيكمل عادي ويتزامن أول ما يرجع.</div>
+    <p class="muted">جهاز جديد بعدين؟ من أي جهاز متربط: زرار المزامنة ☁ ← «اربط جهاز تاني».</p>
+  </div></div>
+
+  <div class="card">
+    <h2 style="margin:0 0 6px;font-size:17px">لو حصلت مشكلة</h2>
+    <ul style="margin:0;padding-inline-start:20px;font-size:14.5px">
+      <li><b>لينك الربط ضاع؟</b> من أي جهاز متربط: ☁ ← «اربط جهاز تاني». أو من محرر Apps Script: اختار الدالة <span class="k">showSetupLink</span> فوق ودوس <span class="k">Run</span> — هيظهر في <span class="k">Execution log</span>.</li>
+      <li><b>موبايل ضاع أو اتسرق؟</b> من المحرر شغّل <span class="k">resetKey</span> — بيعمل مفتاح جديد، وكل الأجهزة هتحتاج تتربط تاني باللينك الجديد.</li>
+    </ul>
+  </div>
+</main>
+<script>
+  document.getElementById('copyBtn').onclick = async () => {
+    const r = await fetch('setup/Code.gs.txt', { cache: 'no-cache' });
+    const code = await r.text();
+    try { await navigator.clipboard.writeText(code); }
+    catch (_) { const t = document.createElement('textarea'); t.value = code; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); }
+    const c = document.getElementById('copied'); c.classList.add('on'); setTimeout(() => c.classList.remove('on'), 2500);
+  };
+</script>
+</body>
+</html>

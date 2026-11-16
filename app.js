@@ -9,7 +9,7 @@ const KO = PW / 591.815;                  // الغلاف الخارجي أضي�
 
 /* ====================== التخطيط (Layout) ====================== */
 const MED = [
-  ['med.bp', 442.1, 164.4], ['med.diabetes', 442.1, 182.0], ['med.hepc', 442.1, 199.6], ['med.pregnant', 442.1, 217.2],
+  ['med.bp', 442.1, 164.4], ['med.diabetes', 442.1, 182.0], ['med.hepc', 442.1, 199.6], ['med.pregnant', 306.6, 217.2], // «هل انت حامل» سطرها عريض ومربعها في آخرها
   ['med.bleeding', 306.6, 164.4], ['med.heart', 306.6, 182.0], ['med.epilepsy', 306.6, 199.6],
   ['med.liver', 158.6, 164.4], ['med.kidney', 158.6, 182.0], ['med.thyroid', 158.6, 199.6], ['med.nursing', 158.6, 217.2],
 ];
@@ -865,9 +865,10 @@ async function syncSheet() {
   const body = [];
   if (!Sync.cfg) {
     const p = el('p'); p.style.cssText = 'margin:0 0 6px;color:#455;line-height:1.7;font-size:14px';
-    p.textContent = 'عشان الملفات تبقى واحدة على الموبايل والكمبيوتر، افتح «لينك الربط» على كل جهاز مرة واحدة — أو الصق الكود هنا.';
-    const inp = el('textarea'); inp.placeholder = 'الصق لينك أو كود الربط'; inp.dir = 'ltr'; inp.style.minHeight = '80px';
-    body.push(p, inp);
+    p.textContent = 'عشان الملفات تبقى واحدة على الموبايل والكمبيوتر، افتح «لينك الربط» على كل جهاز مرة واحدة — أو الصق اللينك هنا.';
+    const inp = el('textarea'); inp.placeholder = 'الصق لينك الربط'; inp.dir = 'ltr'; inp.style.minHeight = '80px';
+    const h = el('p', 'hint'); h.innerHTML = 'لسه السيرفر ما اتعملش؟ <a href="setup.html" target="_blank">دليل التجهيز لمدير العيادة</a> (مرة واحدة، 5 دقايق).';
+    body.push(p, inp, h);
     openSheet('ربط المزامنة', body, [['اربط', 'ok', async () => (await Sync.connect(inp.value)) ? undefined : false], ['إلغاء', 'no', () => {}]]);
     return;
   }
@@ -881,8 +882,30 @@ async function syncSheet() {
   body.push(info);
   openSheet('المزامنة', body, [
     ['زامن دلوقتي', 'ok', () => { Sync.run(); }],
+    ['اربط جهاز تاني', 'no', () => { linkDeviceSheet(); return false; }],
     ['فصل الجهاز ده', 'del', async () => { if (!confirm('فصل الجهاز ده عن المزامنة؟ الملفات اللي عليه هتفضل موجودة.')) return false; await Sync.disconnect(); toast('الجهاز اتفصل'); }],
   ]);
+}
+
+// لينك الربط لجهاز جديد: QR للموبايل + نسخ / مشاركة
+function setupLinkOf(cfg) {
+  const code = btoa(unescape(encodeURIComponent(JSON.stringify({ u: cfg.url, k: cfg.key })))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  return location.origin + location.pathname.replace(/[^/]*$/, '') + '#sync=' + code;
+}
+function loadQR() {
+  if (window.QRCode) return Promise.resolve();
+  return new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js'; s.onload = res; s.onerror = rej; document.head.append(s); });
+}
+function linkDeviceSheet() {
+  const link = setupLinkOf(Sync.cfg);
+  const qr = el('div', 'qr');
+  const ta = el('textarea', 'linkbox'); ta.readOnly = true; ta.value = link; ta.onclick = () => ta.select();
+  const hint = el('p', 'hint'); hint.textContent = 'صوّر الكود ده بكاميرا الموبايل الجديد، أو ابعتله اللينك على واتساب وافتحه منه. ⚠ اللينك ده زي مفتاح العيادة — ما تبعتهوش لحد برا العيادة.';
+  const btns = [['انسخ اللينك', 'ok', async () => { try { await navigator.clipboard.writeText(link); } catch (_) { ta.select(); document.execCommand('copy'); } toast('✓ اتنسخ'); return false; }]];
+  if (navigator.share) btns.push(['ابعت…', 'no', () => { navigator.share({ title: 'ربط Bloom Files', text: 'افتح اللينك ده على الجهاز عشان يتربط بملفات العيادة', url: link }).catch(() => {}); return false; }]);
+  openSheet('اربط جهاز تاني', [qr, hint, ta], btns);
+  loadQR().then(() => new QRCode(qr, { text: link, width: 400, height: 400, colorDark: '#0b2033', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M }))
+    .catch(() => { qr.textContent = 'الـ QR محتاج نت — استخدم اللينك'; });
 }
 
 /* ====================== تشغيل ====================== */

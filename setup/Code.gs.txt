@@ -49,7 +49,7 @@ var SyncCore = (function () {
 if (typeof module !== 'undefined') module.exports = SyncCore;
 
 /* Bloom Clinic — سيرفر المزامنة (Google Apps Script + Google Sheet)
-   كل مريض = سطر في شيت "Patients". الأعمدة الأولى للقراءة (رقم الملف / الاسم / الموبايل)
+   كل مريض = سطر في شيت "Patients" (أعمدة للقراءة: رقم الملف / الاسم / الموبايل)، وكل سجل حسابات = سطر في شيت "Finance".
    والباقي = بيانات الملف كاملة (JSON) مقسومة على كذا خانة. */
 
 var CHUNK = 40000;      // حد الخانة في جوجل شيت 50 ألف حرف
@@ -102,40 +102,67 @@ function scriptProps_() {
   return { get: function (k) { return p.getProperty(k); }, set: function (k, v) { p.setProperty(k, v); } };
 }
 
-function sheet_() {
-  var id = PropertiesService.getScriptProperties().getProperty('SHEET_ID');
-  return SpreadsheetApp.openById(id).getSheetByName('Patients');
+// شيت ملفات المرضى + شيت حسابات العيادة (في نفس ملف الشيت على درايف العيادة)
+var FIN_HEAD = ['id', 'rev', 'آخر تعديل', 'النوع', 'التاريخ / الشهر', 'الوصف', 'محذوف'];
+function prepSheet_(sh, head) {
+  var cols = head.length + MAXCHUNKS;
+  if (sh.getMaxColumns() < cols) sh.insertColumnsAfter(sh.getMaxColumns(), cols - sh.getMaxColumns());
+  var h = head.slice();
+  for (var i = 1; i <= MAXCHUNKS; i++) h.push('data' + i);
+  sh.getRange(1, 1, 1, cols).setValues([h]).setFontWeight('bold');
+  sh.setFrozenRows(1);
+  sh.getRange(1, head.length + 1, sh.getMaxRows(), MAXCHUNKS).setNumberFormat('@');
+  sh.hideColumns(head.length + 1, MAXCHUNKS);
+  sh.hideColumns(1, 2);
+  sh.setRightToLeft(true);
+}
+function sheets_() {
+  var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SHEET_ID'));
+  var fin = ss.getSheetByName('Finance');
+  if (!fin) { fin = ss.insertSheet('Finance'); prepSheet_(fin, FIN_HEAD); }
+  return { p: ss.getSheetByName('Patients'), f: fin };
+}
+function finRow_(rec) {
+  var t = { line: 'دخل', exp: 'مصروفات', settings: 'إعدادات' }[rec.type] || rec.type || '';
+  var desc = '';
+  if (rec.type === 'line') desc = (rec.dn || '') + ' — ' + (rec.total || 0) + (rec.hasLab && rec.lab ? ' (معمل ' + rec.lab + ')' : '');
+  if (rec.type === 'settings') desc = rec.clinicName || '';
+  return [t, rec.date || rec.month || '', desc];
 }
 
 function sheetStore_() {
-  var sh = sheet_();
-  var last = sh.getLastRow();
-  var idx = {};
-  if (last > 1) {
-    var v = sh.getRange(2, 1, last - 1, 2).getValues();
-    for (var i = 0; i < v.length; i++) if (v[i][0]) idx[v[i][0]] = { row: i + 2, rev: Number(v[i][1]) || 0 };
-  }
+  var sh = sheets_();
+  var idx = {}, last = {};
+  ['p', 'f'].forEach(function (w) {
+    var n = sh[w].getLastRow();
+    last[w] = n;
+    if (n > 1) {
+      var v = sh[w].getRange(2, 1, n - 1, 2).getValues();
+      for (var i = 0; i < v.length; i++) if (v[i][0]) idx[v[i][0]] = { w: w, row: i + 2, rev: Number(v[i][1]) || 0 };
+    }
+  });
   var cache = {};
   return {
     get: function (id) {
       if (cache[id]) return cache[id];
       var x = idx[id];
       if (!x) return null;
-      var parts = sh.getRange(x.row, HEAD.length + 1, 1, MAXCHUNKS).getValues()[0];
+      var parts = sh[x.w].getRange(x.row, HEAD.length + 1, 1, MAXCHUNKS).getValues()[0];
       var s = parts.map(function (c) { return String(c || '').slice(1); }).join('');
       return (cache[id] = s ? JSON.parse(s) : null);
     },
     put: function (rec, rev) {
+      var w = rec.kind === 'fin' ? 'f' : 'p';
       var s = JSON.stringify(rec);
       var chunks = [];
       for (var i = 0; i < s.length; i += CHUNK) chunks.push('~' + s.slice(i, i + CHUNK)); // '~' عشان الشيت ما يفتكرش البيانات معادلة
       if (chunks.length > MAXCHUNKS) throw new Error('الملف ' + rec.id + ' كبير زيادة');
       while (chunks.length < MAXCHUNKS) chunks.push('');
-      var row = idx[rec.id] ? idx[rec.id].row : (last = Math.max(last, 1) + 1);
-      sh.getRange(row, 1, 1, HEAD.length + MAXCHUNKS).setValues([[
-        rec.id, rev, new Date(rec.updatedAt || Date.now()), String(rec.fileNo || ''), rec.name || '', String(rec.mobile || ''), rec.deleted ? 'نعم' : '',
-      ].concat(chunks)]);
-      idx[rec.id] = { row: row, rev: rev };
+      var row = idx[rec.id] ? idx[rec.id].row : (last[w] = Math.max(last[w], 1) + 1);
+      var info = w === 'f' ? finRow_(rec) : [String(rec.fileNo || ''), rec.name || '', String(rec.mobile || '')];
+      sh[w].getRange(row, 1, 1, HEAD.length + MAXCHUNKS).setValues([[
+        rec.id, rev, new Date(rec.updatedAt || Date.now())].concat(info, [rec.deleted ? 'نعم' : '']).concat(chunks)]);
+      idx[rec.id] = { w: w, row: row, rev: rev };
       cache[rec.id] = rec;
     },
     since: function (s) {
@@ -159,16 +186,8 @@ function setup_() {
     var ss = SpreadsheetApp.create('Bloom Clinic — بيانات ملفات المرضى');
     var sh = ss.getSheets()[0];
     sh.setName('Patients');
-    var cols = HEAD.length + MAXCHUNKS;
-    if (sh.getMaxColumns() < cols) sh.insertColumnsAfter(sh.getMaxColumns(), cols - sh.getMaxColumns());
-    var head = HEAD.slice();
-    for (var i = 1; i <= MAXCHUNKS; i++) head.push('data' + i);
-    sh.getRange(1, 1, 1, cols).setValues([head]).setFontWeight('bold');
-    sh.setFrozenRows(1);
-    sh.getRange(1, HEAD.length + 1, sh.getMaxRows(), MAXCHUNKS).setNumberFormat('@');
-    sh.hideColumns(HEAD.length + 1, MAXCHUNKS);
-    sh.hideColumns(1, 2);
-    sh.setRightToLeft(true);
+    prepSheet_(sh, HEAD);
+    prepSheet_(ss.insertSheet('Finance'), FIN_HEAD);
     props.setProperty('SHEET_ID', ss.getId());
   }
   if (!props.getProperty('SYNC_KEY')) {

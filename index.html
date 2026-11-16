@@ -14,8 +14,9 @@
 <link rel="apple-touch-icon" href="icons/apple-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="fin.css">
 </head>
 <body>
 
@@ -30,12 +31,23 @@
       <input type="file" id="restoreFile" accept=".json,application/json" hidden>
     </div>
   </header>
-  <div class="home-tools">
-    <div class="search"><input id="q" type="search" placeholder="ابحث بالاسم أو الموبايل أو رقم الملف" autocomplete="off"></div>
-    <button class="primary" id="btnNew">+ ملف جديد</button>
+  <nav class="apptabs" id="appTabs">
+    <button data-app="files" class="on">ملفات المرضى</button>
+    <button data-app="fin">حسابات العيادة</button>
+  </nav>
+  <div id="filesPanel">
+    <div class="home-tools">
+      <div class="search"><input id="q" type="search" placeholder="ابحث بالاسم أو الموبايل أو رقم الملف" autocomplete="off"></div>
+      <button class="primary" id="btnNew">+ ملف جديد</button>
+    </div>
+    <div class="count-row"><div class="count" id="count"></div>
+      <label class="sort" id="sortBox" hidden>ترتيب:
+        <select id="sort"><option value="upd">آخر تعديل</option><option value="desc">رقم الملف (الأحدث)</option><option value="asc">رقم الملف (الأقدم)</option></select>
+      </label>
+    </div>
+    <div id="list" class="cabinet"></div>
   </div>
-  <div class="count" id="count"></div>
-  <div id="list" class="cabinet"></div>
+  <div id="finPanel" class="fin" hidden></div>
   <footer class="credit">
     <div class="sig-credit"><span>تصميم وتطوير</span><img src="img/graficoo-white.png" alt="Graficoo Studio"></div>
   </footer>
@@ -90,9 +102,11 @@
 </div>
 
 <div id="toast" class="toast" hidden></div>
+<div id="stackTip" class="stack-tip" hidden></div>
 <div id="print" class="print"></div>
 
 <script src="sync-core.js"></script>
 <script src="app.js"></script>
+<script src="fin.js"></script>
 </body>
 </html>

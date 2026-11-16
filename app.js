@@ -22,25 +22,35 @@ const PLAN = [
 
 const FIELDS = {
   front: [
-    { k: 'fileNo', label: 'رقم الملف', x: 32.9, y: 38.8, w: 90, h: 21.6, fs: 12, c: 1, out: 1, type: 'num' },
-    { k: 'name', label: 'إسم العميل', x: 82.3, y: 648.1, w: 301.1, h: 29.2, fs: 15, out: 1 },
-    { k: 'mobile', label: 'الموبايل', x: 82.3, y: 686.2, w: 301.1, h: 29.1, fs: 15, out: 1, type: 'tel' },
-    { k: 'fileNo', label: 'رقم الملف', x: 139.2, y: 724.2, w: 187.4, h: 29.2, fs: 15, out: 1, type: 'num' },
+    { k: 'fileNo', label: 'رقم الملف', x: 32.9, y: 38.8, w: 90, h: 21.6, fs: 15, c: 1, out: 1, type: 'num' },
+    { k: 'name', label: 'إسم العميل', x: 82.3, y: 648.1, w: 301.1, h: 29.2, fs: 19, out: 1 },
+    { k: 'mobile', label: 'الموبايل', x: 82.3, y: 686.2, w: 301.1, h: 29.1, fs: 19, out: 1, type: 'tel' },
+    { k: 'fileNo', label: 'رقم الملف', x: 139.2, y: 724.2, w: 187.4, h: 29.2, fs: 19, out: 1, type: 'num' },
   ],
   info: [
-    { k: 'firstVisit', label: 'تاريخ أول زيارة', x: 21.1, y: 21.9, w: 109.2, h: 19.5, fs: 10, c: 1, type: 'date' },
-    { k: 'name', label: 'إسم العميل', x: 304.7, y: 54.6, w: 201.5, h: 19.5, fs: 10 },
-    { k: 'address', label: 'العنوان', x: 21.3, y: 54.6, w: 201.5, h: 19.5, fs: 10 },
-    { k: 'mobile', label: 'رقم الموبايل', x: 399.3, y: 79.7, w: 106.9, h: 19.5, fs: 10, type: 'tel' },
-    { k: 'age', label: 'السن', x: 304.7, y: 79.7, w: 37.7, h: 19.5, fs: 10, c: 1, type: 'num' },
-    { k: 'job', label: 'الوظيفة', x: 21.3, y: 79.7, w: 201.5, h: 19.5, fs: 10 },
-    { k: 'medNotes', label: 'ملاحظات (التاريخ الطبي)', x: 21.4, y: 199.8, w: 133.1, h: 30, fs: 7.4, type: 'area', indent: 41, lh: 9.6 },
-    { k: 'dentalNotes', label: 'ملاحظات (صحة الأسنان)', x: 21.3, y: 274.2, w: 235.2, h: 14, fs: 7.8, indent: 50 },
-    { k: 'consentName', label: 'إقر انا (اسم المريض)', x: 300.5, y: 797.3, w: 231, h: 11.6, fs: 8, c: 1, auto: 'name', box: 1 },
-    { k: 'consentDay', label: 'وذلك يوم', x: 468, y: 810.2, w: 48, h: 11.6, fs: 7.6, c: 1, type: 'day', box: 1 },
-    { k: 'consentDate', label: 'الموافق', x: 378, y: 810.2, w: 53, h: 11.6, fs: 7.6, c: 1, type: 'date', box: 1 },
+    { k: 'firstVisit', label: 'تاريخ أول زيارة', x: 21.1, y: 21.9, w: 109.2, h: 19.5, fs: 12, c: 1, type: 'date' },
+    { k: 'name', label: 'إسم العميل', x: 304.7, y: 54.6, w: 201.5, h: 19.5, fs: 12.5 },
+    { k: 'address', label: 'العنوان', x: 21.3, y: 54.6, w: 201.5, h: 19.5, fs: 12.5 },
+    { k: 'mobile', label: 'رقم الموبايل', x: 399.3, y: 79.7, w: 106.9, h: 19.5, fs: 12.5, type: 'tel' },
+    { k: 'age', label: 'السن', x: 304.7, y: 79.7, w: 37.7, h: 19.5, fs: 12.5, c: 1, type: 'num' },
+    { k: 'job', label: 'الوظيفة', x: 21.3, y: 79.7, w: 201.5, h: 19.5, fs: 12.5 },
+    { k: 'medNotes', label: 'ملاحظات (التاريخ الطبي)', x: 21.4, y: 199.8, w: 133.1, h: 30, fs: 8.8, type: 'area', indent: 41, lh: 9.9 },
+    { k: 'dentalNotes', label: 'ملاحظات (صحة الأسنان)', x: 21.3, y: 274.2, w: 235.2, h: 14, fs: 10, indent: 50 },
+    { k: 'consentName', label: 'إقر انا (اسم المريض)', x: 300.5, y: 797.3, w: 231, h: 11.6, fs: 9.5, c: 1, auto: 'name', box: 1 },
+    { k: 'consentDay', label: 'وذلك يوم', x: 468, y: 810.2, w: 48, h: 11.6, fs: 9, c: 1, type: 'day', box: 1 },
+    { k: 'consentDate', label: 'الموافق', x: 378, y: 810.2, w: 53, h: 11.6, fs: 9, c: 1, type: 'date', box: 1 },
+  ],
+  // صفحة الملاحظات (تصميم جديد بنفس روح الملف)
+  notes: [
+    { k: 'fileNo', label: 'رقم الملف', x: 21.1, y: 21.9, w: 109.2, h: 19.5, fs: 12, c: 1, type: 'num' },
+    { k: 'name', label: 'إسم العميل', x: 304.7, y: 54.6, w: 201.5, h: 19.5, fs: 12.5 },
+    { k: 'mobile', label: 'رقم الموبايل', x: 21.3, y: 54.6, w: 201.5, h: 19.5, fs: 12.5, type: 'tel' },
   ],
 };
+// خانات مشتركة بين كل صفحات الملف (بيانات المريض نفسه) — الباقي خاص بكل صفحة إضافية
+const SHARED = new Set(['name', 'mobile', 'address', 'job', 'age', 'fileNo']);
+// جدول صفحة الملاحظات
+const NOTES = { x: 16.8, w: 561.6, y0: 88.2, hh: 26.6, rows: 24, rh: 29.4, d: 88.6 };
 const CHECKS = {
   info: [
     ...MED.map(([k, x, y]) => ({ k, x, y, w: 19.1, h: 15.1 })),
@@ -124,11 +134,12 @@ const DB = {
   db: null,
   open() {
     return new Promise((res, rej) => {
-      const r = indexedDB.open(TEST ? 'bloom-test' : 'bloom-clinic', 2);
+      const r = indexedDB.open(TEST ? 'bloom-test' : 'bloom-clinic', 3);
       r.onupgradeneeded = () => {
         const db = r.result;
         if (!db.objectStoreNames.contains('patients')) db.createObjectStore('patients', { keyPath: 'id' });
         if (!db.objectStoreNames.contains('meta')) db.createObjectStore('meta');
+        if (!db.objectStoreNames.contains('fin')) db.createObjectStore('fin', { keyPath: 'id' }); // حسابات العيادة
       };
       r.onsuccess = () => { this.db = r.result; res(); };
       r.onerror = () => rej(r.error);
@@ -139,6 +150,10 @@ const DB = {
   put(p) { return new Promise((res, rej) => { const r = this.tx('readwrite').put(p); r.onsuccess = () => res(); r.onerror = () => rej(r.error); }); },
   get(id) { return new Promise((res, rej) => { const r = this.tx('readonly').get(id); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); },
   del(id) { return new Promise((res, rej) => { const r = this.tx('readwrite').delete(id); r.onsuccess = () => res(); r.onerror = () => rej(r.error); }); },
+  fx(mode) { return this.db.transaction('fin', mode).objectStore('fin'); },
+  allF() { return new Promise((res, rej) => { const r = this.fx('readonly').getAll(); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); },
+  getF(id) { return new Promise((res, rej) => { const r = this.fx('readonly').get(id); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); },
+  putF(x) { return new Promise((res, rej) => { const r = this.fx('readwrite').put(x); r.onsuccess = () => res(); r.onerror = () => rej(r.error); }); },
   meta(k, v) {
     return new Promise((res, rej) => {
       const st = this.db.transaction('meta', v === undefined ? 'readonly' : 'readwrite').objectStore('meta');
@@ -150,13 +165,18 @@ const DB = {
 if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 
 let patients = [];
+// الرقم اللي عليه الدور = أصغر رقم مش مستخدم في الملفات الموجودة (الملف المحذوف رقمه بيرجع متاح)
+function nextFileNo(pool) {
+  const used = new Set(pool.filter(p => !p.deleted).map(p => num(p.fileNo)).filter(v => v != null));
+  let n = 1; while (used.has(n)) n++;
+  return n;
+}
 function newPatient(pool = patients) {
-  const max = pool.reduce((m, p) => Math.max(m, num(p.fileNo) || 0), 0); // المحذوفين محسوبين — الرقم ما يتعادش
   const now = Date.now();
   return {
-    id: uid(), fileNo: String(max + 1), name: '', mobile: '', firstVisit: today(), address: '', job: '', age: '',
+    id: uid(), fileNo: String(nextFileNo(pool)), name: '', mobile: '', firstVisit: today(), address: '', job: '', age: '',
     med: {}, medNotes: '', smoker: false, brush: false, dentalNotes: '', plan: {},
-    procs: [], pays: [], teeth: {}, consentName: '', consentDay: '', consentDate: '', signature: '',
+    procs: [], pays: [], teeth: {}, consentName: '', consentDay: '', consentDate: '', signature: '', xp: {},
     createdAt: now, updatedAt: now,
   };
 }
@@ -168,50 +188,148 @@ async function showHome() {
   patients = (await DB.all()).filter(p => !p.deleted);
   renderList();
 }
+const STACK_FROM = 12; // من أول العدد ده الملفات بتترص متداخلة زي درج الملفات
+const SORTS = {
+  upd: (a, b) => b.updatedAt - a.updatedAt,
+  desc: (a, b) => (num(b.fileNo) || 0) - (num(a.fileNo) || 0),
+  asc: (a, b) => (num(a.fileNo) || 0) - (num(b.fileNo) || 0),
+};
 function renderList() {
   const q = toEn($('#q').value.trim()).toLowerCase();
   const list = $('#list'); list.innerHTML = '';
+  setHot(null);
   const rows = patients
     .filter(p => !q || [p.name, toEn(p.mobile), toEn(p.fileNo)].some(v => String(v || '').toLowerCase().includes(q)))
-    .sort((a, b) => b.updatedAt - a.updatedAt);
+    .sort(SORTS[$('#sort').value] || SORTS.upd);
   $('#count').textContent = patients.length ? `${rows.length} من ${patients.length} ملف` : '';
+  $('#sortBox').hidden = patients.length < 2;
   if (!rows.length) {
+    list.classList.remove('stack');
     list.innerHTML = `<div class="empty">${patients.length ? 'مفيش ملف بالبحث ده' : 'لسه مفيش ملفات — دوس «+ ملف جديد» عشان تبدأ'}</div>`;
     return;
   }
-  for (const p of rows) {
+  const stack = rows.length > STACK_FROM;
+  list.classList.toggle('stack', stack);
+  // أرقام مكررة (ممكن تحصل لو جهازين عملوا ملف في نفس الوقت من غير نت)
+  const cnt = {}; patients.forEach(p => { const n = num(p.fileNo); if (n != null) cnt[n] = (cnt[n] || 0) + 1; });
+  rows.forEach((p, i) => {
     const b = el('button', 'card');
+    if (stack) b.style.zIndex = rows.length - i;
+    b._p = p;
+    const dup = cnt[num(p.fileNo)] > 1;
+    const tab = el('div', 'tab' + (dup ? ' dup' : '')); tab.textContent = p.fileNo || '—';
+    if (dup) tab.title = 'الرقم ده مكرر';
     const mini = el('div', 'mini'); mini.style.backgroundImage = 'url(img/front.webp)';
     mini.append(Object.assign(el('div', 'no'), { textContent: p.fileNo || '' }));
     mini.append(Object.assign(el('div', 'nm'), { textContent: p.name || '' }));
     const meta = el('div', 'meta');
     meta.innerHTML = `<b></b><span></span>`;
     meta.firstChild.textContent = p.name || 'بدون اسم';
-    meta.lastChild.textContent = `ملف ${p.fileNo || '—'}${p.mobile ? ' · ' + p.mobile : ''}`;
-    b.append(mini, meta);
-    b.onclick = () => openFile(p);
+    meta.lastChild.textContent = `ملف ${p.fileNo || '—'}${p.mobile ? ' · ' + p.mobile : ''}${dup ? ' · ⚠ رقم مكرر' : ''}`;
+    b.append(tab, mini, meta);
+    b.onclick = () => { if (stackDrag.moved) return; openFile(p); };
     list.append(b);
-  }
+  });
 }
 
+/* الدرج: لما الماوس أو الصباع يعدّي على ملف، يطلع لفوق شوية ويظهر رقمه واسمه */
+const stackDrag = { on: false, moved: false, x: 0 };
+let hotCard = null;
+function setHot(card) {
+  if (card === hotCard) return;
+  if (hotCard) hotCard.classList.remove('hot');
+  hotCard = card;
+  const tip = $('#stackTip');
+  if (!card) { tip.hidden = true; return; }
+  card.classList.add('hot');
+  const p = card._p;
+  tip.innerHTML = '<b></b><span></span>';
+  tip.firstChild.textContent = `ملف ${p.fileNo || '—'}`;
+  tip.lastChild.textContent = p.name || 'بدون اسم';
+  tip.hidden = false;
+  const r = card.getBoundingClientRect(), tw = tip.offsetWidth;
+  // الجزء الظاهر من الملف = شماله (الملف اللي قبله مغطي الباقي)
+  const pr = card.previousElementSibling && card.previousElementSibling.getBoundingClientRect();
+  const strip = pr && Math.abs(pr.top - r.top) < 30 ? Math.max(20, Math.min(r.width, pr.left - r.left)) : r.width;
+  let x = r.left + strip / 2 - tw / 2;
+  x = Math.max(8, Math.min(innerWidth - tw - 8, x));
+  tip.style.left = px(x);
+  tip.style.top = px(Math.max(6, r.top - 16 - tip.offsetHeight - 6));
+}
+function cardAt(x, y) {
+  const list = $('#list');
+  if (hotCard) hotCard.style.pointerEvents = 'none'; // الملف المرفوع ما يغطيش اللي جنبه
+  const e = document.elementFromPoint(x, y);
+  if (hotCard) hotCard.style.pointerEvents = '';
+  const c = e && e.closest('.card');
+  return c && list.contains(c) ? c : null;
+}
+(function stackHover() {
+  const list = $('#list');
+  list.addEventListener('pointermove', e => {
+    if (!list.classList.contains('stack')) return;
+    if (stackDrag.on && Math.abs(e.clientX - stackDrag.x) > 8) stackDrag.moved = true;
+    const c = cardAt(e.clientX, e.clientY);
+    if (c || e.pointerType === 'mouse') setHot(c);
+  });
+  list.addEventListener('pointerdown', e => {
+    stackDrag.on = true; stackDrag.moved = false; stackDrag.x = e.clientX;
+    if (list.classList.contains('stack') && e.pointerType !== 'mouse') setHot(cardAt(e.clientX, e.clientY));
+  });
+  const up = e => { stackDrag.on = false; setTimeout(() => (stackDrag.moved = false), 0); if (e.pointerType !== 'mouse') { clearTimeout(up.t); up.t = setTimeout(() => setHot(null), 1600); } };
+  list.addEventListener('pointerup', up);
+  list.addEventListener('pointercancel', up);
+  list.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') setHot(null); });
+  $('#home').addEventListener('scroll', () => setHot(null), { passive: true });
+})();
+
 /* ====================== بناء الصفحات ====================== */
-const ui = { p: null, mode: 'spread', s: 1, zoom: 1, view: 'cover', open: 0, flipped: false, procSheet: 0, paySheet: 0, sheetEdit: false, busy: false };
+const ui = { p: null, spread: 0, mode: 'spread', s: 1, zoom: 1, view: 'cover', open: 0, flipped: false, procSheet: 0, paySheet: 0, sheetEdit: false, busy: false };
 
 function sheetsOf(arr, per, isFilled) {
   let last = -1; arr.forEach((r, i) => { if (r && isFilled(r)) last = i; });
   return Math.max(1, Math.ceil((last + 2) / per));
 }
-const procFilled = r => (r.t || r.d);
-const payFilled = r => (r.d || r.total || r.paid || r.notes);
+const procFilled = r => !!r && !!(r.t || r.d);
+const payFilled = r => !!r && !!(r.d || r.total || r.paid || r.notes);
 
-function buildPage(kind, p, mode) {
+/* ---- مقاس الكتابة على قد الخانة ---- */
+const MC = document.createElement('canvas').getContext('2d');
+function textW(t, fs) { MC.font = `800 ${fs}px Tajawal, 'Segoe UI', Tahoma, sans-serif`; return MC.measureText(t).width; }
+// سطر واحد: الخط بيصغر لوحده لو الكلام أطول من الخانة
+function fitLine(f, text, w) {
+  if (!text) return f.fs;
+  const avail = w - (f.c ? 3 : 10) - (f.indent || 0);
+  const tw = textW(text, f.fs);
+  return tw <= avail ? f.fs : Math.max(f.fs * 0.5, f.fs * avail / tw);
+}
+// كذا سطر: يصغر لحد ما الكلام كله يدخل في المربع
+function fitArea(f, text, w) {
+  const lhR = (f.lh || f.fs * 1.2) / f.fs;
+  let fs = f.fs;
+  if (!text) return [fs, fs * lhR];
+  for (; fs > f.fs * 0.5; fs -= 0.25) {
+    const avail = w - 8; let lines = 0;
+    text.split('\n').forEach((par, i) => { lines += Math.max(1, Math.ceil((textW(par, fs) * 1.08 + (i === 0 ? f.indent || 0 : 0)) / avail)); });
+    if (lines * fs * lhR <= f.h + 0.5) break;
+  }
+  return [fs, fs * lhR];
+}
+
+// مفتاح الخانة جوه ملف المريض: بيانات المريض مشتركة، والباقي خاص بالصفحة الإضافية
+const keyOf = (k, pid) => (!pid || SHARED.has(k.split('.')[0]) ? k : `xp.${pid}.${k}`);
+const rowFilled = r => !!r && Object.values(r).some(v => v);
+
+function buildPage(kind, p, mode, pid) {
   const out = kind === 'front' || kind === 'back';
   const X = v => (out ? v * KO : v);
   const page = el('div', 'page', { width: px(PW), height: px(PH) });
-  const bg = el('img', 'bg'); bg.src = `img/${kind}.webp`; bg.alt = ''; bg.draggable = false; page.append(bg);
+  if (kind === 'notes') notesBackground(page);
+  else { const bg = el('img', 'bg'); bg.src = `img/${kind}.webp`; bg.alt = ''; bg.draggable = false; page.append(bg); }
   const ro = mode === 'print' || ui.sheetEdit;
+  const K = k => keyOf(k, pid);
 
-  const mkInput = (f, value, onInput, extra = {}) => {
+  const mkInput = (f, value, onInput) => {
     const isArea = f.type === 'area';
     const inp = el(isArea ? 'textarea' : 'input', 'f' + (f.c ? ' c' : '') + (f.box ? ' boxed' : '') + (f.type === 'tel' || f.type === 'num' ? ' ltr' : ''));
     if (!isArea) inp.type = 'text';
@@ -219,61 +337,83 @@ function buildPage(kind, p, mode) {
     if (f.type === 'num') inp.inputMode = 'decimal';
     inp.value = value ?? '';
     inp.spellcheck = false; inp.autocomplete = 'off';
-    Object.assign(inp.style, { left: px(X(f.x)), top: px(f.y), width: px(X(f.w)), height: px(f.h), fontSize: px(f.fs || 10) });
+    const W = X(f.w);
+    Object.assign(inp.style, { left: px(X(f.x)), top: px(f.y), width: px(W), height: px(f.h) });
     if (f.indent) inp.style[isArea ? 'textIndent' : 'paddingRight'] = px(f.indent);
-    if (f.lh) inp.style.lineHeight = px(f.lh);
+    const fit = () => {
+      const t = inp.value || inp.placeholder || '';
+      if (isArea) { const [fs, lh] = fitArea(f, t, W); inp.style.fontSize = px(fs); inp.style.lineHeight = px(lh); }
+      else inp.style.fontSize = px(fitLine(f, t, W));
+    };
+    inp._fit = fit;
     if (f.ph) inp.placeholder = f.ph;
-    Object.assign(inp.style, extra.style || {});
     if (ro) inp.readOnly = true;
     if (mode !== 'print') {
-      if (ui.sheetEdit) inp.addEventListener('click', () => editSheet(f, inp.value, v => { inp.value = v; onInput(v); }));
+      if (ui.sheetEdit) inp.addEventListener('click', () => editSheet(f, inp.value, v => { inp.value = v; fit(); onInput(v); if (f.k === 'fileNo') checkFileNo(); }));
       else {
-        inp.addEventListener('input', () => onInput(inp.value));
-        if (f.type === 'date') inp.addEventListener('dblclick', () => { if (!inp.value) { inp.value = today(); onInput(inp.value); } });
+        inp.addEventListener('input', () => { fit(); onInput(inp.value); });
+        if (f.k === 'fileNo') inp.addEventListener('change', checkFileNo);
+        if (f.type === 'date') inp.addEventListener('dblclick', () => { if (!inp.value) { inp.value = today(); fit(); onInput(inp.value); } });
       }
     }
     inp.dataset.k = f.k;
+    fit();
     return inp;
   };
 
   // الخانات العادية
-  for (const f of FIELDS[kind] || []) {
+  for (const f0 of FIELDS[kind] || []) {
+    const f = { ...f0, k: K(f0.k) };
     let val = getK(p, f.k);
     if (mode === 'print' && f.auto === 'name' && !val) val = p.name;
     const inp = mkInput(f, val, v => { setField(f.k, v); });
-    if (f.auto === 'name') inp.placeholder = p.name || '';
+    if (f.auto === 'name') { inp.placeholder = p.name || ''; inp._fit(); }
     page.append(inp);
   }
   // مربعات الاختيار
-  for (const c of CHECKS[kind] || []) {
-    const cb = el('div', 'cb' + (getK(p, c.k) ? ' on' : ''), { left: px(c.x), top: px(c.y), width: px(c.w), height: px(c.h) });
-    cb.dataset.k = c.k;
-    if (mode !== 'print') cb.onclick = () => { const v = !getK(ui.p, c.k); setK(ui.p, c.k, v); touch(c.k); cb.classList.toggle('on', v); save(); };
+  for (const c0 of CHECKS[kind] || []) {
+    const k = K(c0.k);
+    const cb = el('div', 'cb' + (getK(p, k) ? ' on' : ''), { left: px(c0.x), top: px(c0.y), width: px(c0.w), height: px(c0.h) });
+    cb.dataset.k = k;
+    if (mode !== 'print') cb.onclick = () => { const v = !getK(ui.p, k); setK(ui.p, k, v); touch(k); cb.classList.toggle('on', v); save(); };
     page.append(cb);
   }
 
   if (kind === 'info') {
     // التوقيع
+    const sk = K('signature');
     const sig = el('div', 'sig', { left: px(SIGNATURE.x), top: px(SIGNATURE.y), width: px(SIGNATURE.w), height: px(SIGNATURE.h) });
-    if (p.signature) { const im = el('img'); im.src = p.signature; sig.append(im); }
-    if (mode !== 'print') sig.onclick = () => signatureSheet();
+    const sv = getK(p, sk);
+    if (sv) { const im = el('img'); im.src = sv; sig.append(im); }
+    if (mode !== 'print') sig.onclick = () => signatureSheet(sk);
     page.append(sig);
     // جدول الإجراءات
-    const sheet = mode === 'print' ? 0 : ui.procSheet;
+    const ak = K('procs');
+    const procs = getK(p, ak) || [];
+    const sheet = mode === 'print' || pid ? 0 : ui.procSheet;
     const base = sheet * 26;
     PROC.cols.forEach((col, ci) => {
       for (let r = 0; r < PROC.rows; r++) {
         const i = base + ci * 13 + r;
         const y = PROC.y0 + r * PROC.rh;
-        const rec = p.procs[i] || {};
-        const tf = { k: `procs.${i}.t`, label: `الإجراء العلاجي (سطر ${i + 1})`, x: col.t[0] + 2, y: y + 3, w: col.t[1] - 4, h: PROC.rh - 6, fs: 9 };
-        const df = { k: `procs.${i}.d`, label: `التاريخ (سطر ${i + 1})`, x: col.d[0] + 2, y: y + 3, w: col.d[1] - 4, h: PROC.rh - 6, fs: 8.5, c: 1, type: 'date' };
-        const ti = mkInput(tf, rec.t, v => setRow('procs', i, 't', v));
-        const di = mkInput(df, rec.d, v => setRow('procs', i, 'd', v));
-        ti.dataset.row = i; di.dataset.row = i;
-        page.append(ti, di);
+        const rec = procs[i] || {};
+        const tf = { k: `${ak}.${i}.t`, label: `الإجراء العلاجي (سطر ${i + 1})`, x: col.t[0] + 2, y: y + 3, w: col.t[1] - 4, h: PROC.rh - 6, fs: 12.5 };
+        const df = { k: `${ak}.${i}.d`, label: `التاريخ (سطر ${i + 1})`, x: col.d[0] + 2, y: y + 3, w: col.d[1] - 4, h: PROC.rh - 6, fs: 11.5, c: 1, type: 'date' };
+        page.append(mkInput(tf, rec.t, v => setRow(ak, i, 't', v)), mkInput(df, rec.d, v => setRow(ak, i, 'd', v)));
       }
     });
+  }
+
+  if (kind === 'notes') {
+    const ak = K('notes');
+    const rows = getK(p, ak) || [];
+    for (let i = 0; i < NOTES.rows; i++) {
+      const y = NOTES.y0 + NOTES.hh + i * NOTES.rh;
+      const rec = rows[i] || {};
+      const df = { k: `${ak}.${i}.d`, label: `التاريخ (سطر ${i + 1})`, x: NOTES.x + 3, y: y + 3, w: NOTES.d - 6, h: NOTES.rh - 6, fs: 11.5, c: 1, type: 'date' };
+      const tf = { k: `${ak}.${i}.t`, label: `ملاحظة (سطر ${i + 1})`, x: NOTES.x + NOTES.d + 3, y: y + 3, w: NOTES.w - NOTES.d - 6, h: NOTES.rh - 6, fs: 12.5 };
+      page.append(mkInput(df, rec.d, v => setRow(ak, i, 'd', v)), mkInput(tf, rec.t, v => setRow(ak, i, 't', v)));
+    }
   }
 
   if (kind === 'back') {
@@ -283,26 +423,32 @@ function buildPage(kind, p, mode) {
       const i = sheet * PAY.rows + r;
       const y = PAY.y0 + r * PAY.rh;
       const rec = p.pays[i] || {};
-      const mk = (col, label, extra) => ({ k: `pays.${i}.${col}`, label: `${label} (سطر ${i + 1})`, x: PAY.x[col][0] + 2, y: y + 3, w: PAY.x[col][1] - 4, h: PAY.rh - 6, fs: 10, c: 1, ...extra });
-      page.append(mkInput(mk('d', 'التاريخ', { type: 'date', fs: 9 }), rec.d, v => setRow('pays', i, 'd', v)));
+      const mk = (col, label, extra) => ({ k: `pays.${i}.${col}`, label: `${label} (سطر ${i + 1})`, x: PAY.x[col][0] + 2, y: y + 3, w: PAY.x[col][1] - 4, h: PAY.rh - 6, fs: 13, c: 1, ...extra });
+      page.append(mkInput(mk('d', 'التاريخ', { type: 'date', fs: 12 }), rec.d, v => setRow('pays', i, 'd', v)));
       page.append(mkInput(mk('total', 'الإجمالى', { type: 'num' }), rec.total, v => setRow('pays', i, 'total', v)));
       page.append(mkInput(mk('paid', 'المدفوع', { type: 'num' }), rec.paid, v => setRow('pays', i, 'paid', v)));
       const rem = el('div', 'cell rem', { left: px(X(PAY.x.rem[0])), top: px(y), width: px(X(PAY.x.rem[1])), height: px(PAY.rh) });
       rem.dataset.rem = i; showRem(rem, rems[i]);
       page.append(rem);
-      page.append(mkInput(mk('notes', 'ملاحظات', { c: 0, fs: 9 }), rec.notes, v => setRow('pays', i, 'notes', v)));
+      page.append(mkInput(mk('notes', 'ملاحظات', { c: 0, fs: 12 }), rec.notes, v => setRow('pays', i, 'notes', v)));
     }
   }
 
   if (kind === 'chart') {
+    const tk = K('teeth');
+    const teeth = getK(p, tk) || {};
     for (const t of TEETH) {
-      const st = (p.teeth || {})[t.id] || {};
+      const st = teeth[t.id] || {};
       const S = STATUS_BY[st.s];
       // المربع جنب السنة: ✓ لما يتحدد لها مشكلة — والسطر: اسم المشكلة + الملاحظة
       const box = el('div', 't-box' + (S ? ' on' : ''), { left: px(t.box), top: px(t.y), width: px(10.2), height: px(10.2) });
       const note = el('div', 't-note', { left: px(t.strip), top: px(t.y - 0.5), width: px(122.7), height: px(11.2) });
       const txt = !S ? (st.n || '') : !st.n ? S.t : st.n.startsWith(S.t) ? st.n : `${S.t} — ${st.n}`;
-      if (txt) { const sp = el('span'); sp.textContent = txt; if (S) sp.style.setProperty('--tc', S.c); note.append(sp); }
+      if (txt) {
+        const sp = el('span'); sp.textContent = txt; if (S) sp.style.setProperty('--tc', S.c);
+        sp.style.fontSize = px(fitLine({ fs: 8.6, c: 1 }, txt, 122.7));
+        note.append(sp);
+      }
       const lab = el('div', 't-lab', { left: px(t.lab), top: px(t.y), width: px(10.2), height: px(10.2) });
       const c = CROWN[t.id];
       const crown = el('div', 't-crown' + (st.s === 'missing' ? ' gone' : ''), { left: px(c[0] + 2), top: px(c[1] + 2), width: px(c[2] - c[0] - 4), height: px(c[3] - c[1] - 4) });
@@ -311,14 +457,40 @@ function buildPage(kind, p, mode) {
       for (const e of parts) {
         e.dataset.tooth = t.id;
         if (mode === 'print') continue;
-        e.onclick = () => toothSheet(t.id);
+        e.onclick = () => toothSheet(t.id, tk);
         e.onpointerenter = () => parts.forEach(x => x.classList.add('hl'));
         e.onpointerleave = () => parts.forEach(x => x.classList.remove('hl'));
       }
       page.append(crown, box, note, lab);
     }
   }
+
+  // الصفحة الإضافية: زرار صغير تحت لحذفها
+  if (pid && mode !== 'print') {
+    const d = el('button', 'pg-del'); d.textContent = '✕ حذف الصفحة دي';
+    d.onclick = () => removePage(pid);
+    page.append(d);
+  }
   return page;
+}
+
+// تصميم صفحة الملاحظات: نفس عناوين وخانات وجدول صفحة البيانات
+function notesBackground(page) {
+  const box = (cls, x, y, w, h, html) => { const d = el('div', 'nb ' + cls, { left: px(x), top: px(y), width: px(w), height: px(h) }); if (html) d.innerHTML = html; page.append(d); return d; };
+  page.classList.add('notes-page');
+  const bar = box('bar', 16.8, 18.4, 561.6, 26.6);
+  bar.innerHTML = '<img src="img/mark-white.png" alt=""><b>ملاحظـــات الطبيـــب:</b><span>رقم الملف</span>';
+  box('white', 21.1, 21.9, 109.2, 19.5);
+  box('pill', 511.4, 54.6, 63.4, 19.5, 'إسم العميل');
+  box('gray', 304.7, 54.6, 201.5, 19.5);
+  box('pill', 228.2, 54.6, 70.6, 19.5, 'رقم الموبايل');
+  box('gray', 21.3, 54.6, 201.5, 19.5);
+  const t = box('table', NOTES.x, NOTES.y0, NOTES.w, NOTES.hh + NOTES.rows * NOTES.rh);
+  const head = el('div', 'th', { height: px(NOTES.hh) });
+  head.innerHTML = `<b style="width:${NOTES.w - NOTES.d}px">الملاحظـــــــــات</b><b style="width:${NOTES.d}px">التاريـــخ</b>`;
+  t.append(head);
+  for (let i = 0; i < NOTES.rows; i++) t.append(el('div', 'tr', { height: px(NOTES.rh) }));
+  t.append(el('div', 'tcol', { left: px(NOTES.d) }));
 }
 
 function payRemains(pays) {
@@ -344,21 +516,22 @@ function setField(k, v) {
   save();
 }
 function syncTwins(k, v) {
-  document.querySelectorAll(`#folder .f[data-k="${k}"]`).forEach(i => { if (i !== document.activeElement) i.value = v; });
-  if (k === 'name') { const c = $('#folder .f[data-k="consentName"]'); if (c) c.placeholder = v; }
+  document.querySelectorAll(`#folder .f[data-k="${k}"]`).forEach(i => { if (i !== document.activeElement) { i.value = v; i._fit && i._fit(); } });
+  if (k === 'name') document.querySelectorAll('#folder .f[data-k$="consentName"]').forEach(c => { c.placeholder = v; c._fit && c._fit(); });
   updateTitle();
 }
 function setRow(arr, i, col, v) {
-  const a = ui.p[arr];
+  let a = getK(ui.p, arr);
+  if (!Array.isArray(a)) { a = []; setK(ui.p, arr, a); }
   while (a.length <= i) a.push({});
   a[i] = a[i] || {};
   a[i][col] = v; touch(`${arr}.${i}`);
   // تاريخ تلقائي لما يتكتب في السطر لأول مرة
   if (col !== 'd' && v && !a[i].d) {
     a[i].d = today();
-    const di = $(`#folder .f[data-k="${arr}.${i}.d"]`); if (di) di.value = a[i].d;
+    const di = $(`#folder .f[data-k="${arr}.${i}.d"]`); if (di) { di.value = a[i].d; di._fit && di._fit(); }
   }
-  while (a.length && !(arr === 'procs' ? procFilled : payFilled)(a.at(-1) || {})) a.pop();
+  while (a.length && !rowFilled(a.at(-1))) a.pop();
   if (arr === 'pays') {
     const rems = payRemains(a);
     document.querySelectorAll('#folder [data-rem]').forEach(c => showRem(c, rems[+c.dataset.rem]));
@@ -389,18 +562,140 @@ const faces = () => ({
   chart: $('#folder [data-page="chart"]'), info: $('#folder [data-page="info"]'),
 });
 
+/* ---- الصفحات الإضافية جوه الملف ----
+   ui.p.xp = { id: { kind: 'info' | 'chart' | 'notes', at, del, ...بيانات الصفحة } }
+   الملف من جوه زي الكتاب: الوش الأول (البيانات يمين + الأسنان شمال)، وبعده الصفحات الإضافية بالترتيب. */
+function extras(p = ui.p) {
+  return Object.entries(p.xp || {}).filter(([, x]) => x && x.kind && !x.del)
+    .sort((a, b) => (a[1].at || 0) - (b[1].at || 0)).map(([id, x]) => ({ id, kind: x.kind, g: x.g || id }));
+}
+// الوشّين اللي اتضافوا مع بعض بيفضلوا مع بعض (بيانات يمين + أسنان شمال)، والصفحات الفردي بتكمّل بعضها
+function spreads() {
+  const s = [{ right: { kind: 'info' }, left: { kind: 'chart' } }];
+  const E = extras();
+  let open = null;
+  for (let i = 0; i < E.length; i++) {
+    const pair = E[i + 1] && E[i + 1].g === E[i].g;
+    if (pair) { s.push({ right: E[i], left: E[i + 1] }); i++; open = null; continue; }
+    if (open) { open.left = E[i]; open = null; } else { open = { right: E[i], left: null }; s.push(open); }
+  }
+  return s;
+}
+const flatPages = () => spreads().flatMap(s => [s.right, s.left].filter(Boolean));
+const PAGE_NAME = { info: 'صفحة البيانات والإجراءات', chart: 'صفحة الأسنان', notes: 'صفحة ملاحظات' };
+function mkFace(d) {
+  const pg = d ? buildPage(d.kind, ui.p, 'edit', d.id) : blankPage();
+  pg.style.transform = `scale(${ui.s})`;
+  return pg;
+}
+function blankPage() {
+  const page = el('div', 'page blank', { width: px(PW), height: px(PH) });
+  const b = el('button', 'add-page'); b.innerHTML = '<i>+</i><span>زوّد صفحة</span>';
+  b.onclick = addPageSheet;
+  page.append(b);
+  return page;
+}
 function renderPages(only) {
   const F = faces();
+  const S = spreads(); if (ui.spread >= S.length) ui.spread = S.length - 1;
+  const sp = S[ui.spread];
+  const map = { front: { kind: 'front' }, back: { kind: 'back' }, info: sp.right, chart: sp.left };
   for (const k of only || ['front', 'back', 'chart', 'info']) {
     F[k].innerHTML = '';
-    const pg = buildPage(k, ui.p, 'edit');
-    pg.style.transform = `scale(${ui.s})`;
-    F[k].append(pg);
+    F[k].append(mkFace(map[k]));
+  }
+}
+function addPageSheet() {
+  const opts = el('div', 'opts');
+  const mk = (title, sub, kinds) => {
+    const b = el('button'); b.innerHTML = '<b></b><small></small>';
+    b.firstChild.textContent = title; b.lastChild.textContent = sub;
+    b.onclick = () => { closeSheet(); addPages(kinds); };
+    opts.append(b);
+  };
+  mk('الوشّين مع بعض', 'صفحة بيانات وإجراءات + صفحة أسنان جديدة', ['info', 'chart']);
+  mk('صفحة البيانات والإجراءات بس', 'الوش الأول: تاريخ طبي + خطة علاج + جدول إجراءات جديد', ['info']);
+  mk('صفحة الأسنان بس', 'الوش التاني: رسم أسنان جديد', ['chart']);
+  mk('صفحة ملاحظات', 'جدول ملاحظات بالتاريخ', ['notes']);
+  openSheet('زوّد صفحة للملف', [opts], [['إلغاء', 'no', () => {}]]);
+}
+function addPages(kinds) {
+  ui.p.xp = ui.p.xp || {};
+  let at = Date.now();
+  const g = uid(), ids = [];
+  for (const k of kinds) {
+    const id = uid(); ids.push(id);
+    ui.p.xp[id] = { kind: k, at, g };
+    touch(`xp.${id}.kind`); touch(`xp.${id}.at`); touch(`xp.${id}.g`);
+    if (k === 'info') { ui.p.xp[id].firstVisit = today(); touch(`xp.${id}.firstVisit`); }
+    at++;
+  }
+  save();
+  // نروح للصفحة الجديدة
+  const S = spreads(), k = S.findIndex(s => [s.right, s.left].some(x => x && x.id === ids[0]));
+  turnTo(k, S[k].left && S[k].left.id === ids[0] ? 'chart' : 'info');
+  toast(kinds.length > 1 ? 'اتضافت صفحتين جداد' : `اتضافت ${PAGE_NAME[kinds[0]]}`);
+}
+async function removePage(id) {
+  const x = ui.p.xp && ui.p.xp[id]; if (!x) return;
+  if (!confirm(`حذف ${PAGE_NAME[x.kind] || 'الصفحة'} دي باللي مكتوب فيها؟`)) return;
+  x.del = true; touch(`xp.${id}.del`); save();
+  const S = spreads();
+  if (ui.spread >= S.length) ui.spread = S.length - 1;
+  if (ui.mode === 'single' && ui.view === 'chart' && !S[ui.spread].left) { ui.view = 'info'; applyGeometry(); setNav(); }
+  renderPages(['info', 'chart']); updateCtx();
+  toast('الصفحة اتحذفت');
+}
+// قلب الصفحات جوه الملف (زي الكتاب)
+async function turnTo(k, side = 'info') {
+  const S = spreads();
+  k = Math.max(0, Math.min(S.length - 1, k));
+  if (ui.busy) return;
+  if (k === ui.spread) { if (ui.mode === 'single' && side !== ui.view) await go(side, true); renderPages(['info', 'chart']); updateCtx(); return; }
+  if (ui.flipped || !ui.open) { ui.spread = k; renderPages(['info', 'chart']); await go(side, true); return; }
+  ui.busy = true;
+  const fwd = k > ui.spread, F = faces(), folder = $('#folder');
+  ui.spread = k; ui.procSheet = 0;
+  const nr = mkFace(S[k].right), nl = mkFace(S[k].left);
+  try {
+    if (ui.mode === 'spread') {
+      const leaf = el('div', 'leaf turn ' + (fwd ? 'fwd' : 'bwd'));
+      const fr = el('div', 'face front'), bk = el('div', 'face back');
+      leaf.append(fr, bk);
+      if (fwd) { fr.append(...F.info.childNodes); bk.append(nl); F.info.append(nr); }
+      else { fr.append(...F.chart.childNodes); bk.append(nr); F.chart.append(nl); }
+      folder.append(leaf); leaf.offsetWidth; leaf.classList.add('go');
+      await wait(760);
+      if (fwd) { F.chart.innerHTML = ''; F.chart.append(nl); } else { F.info.innerHTML = ''; F.info.append(nr); }
+      leaf.remove();
+    } else {
+      const target = side === 'chart' && S[k].left ? 'chart' : 'info';
+      const face = target === 'chart' ? F.chart : F.info;
+      F.info.innerHTML = ''; F.info.append(nr); F.chart.innerHTML = ''; F.chart.append(nl);
+      face.classList.remove('turn-in', 'turn-back'); face.offsetWidth;
+      face.classList.add(fwd ? 'turn-in' : 'turn-back');
+      if (target !== ui.view) { ui.view = target; applyGeometry(); }
+      await wait(520);
+      face.classList.remove('turn-in', 'turn-back');
+    }
+  } finally { ui.busy = false; }
+  setNav(); updateCtx();
+}
+// الموبايل: الصفحة اللي بعدها / اللي قبلها (البيانات ← الأسنان ← الصفحات الإضافية)
+function pageStep(dir) {
+  const S = spreads(), k = ui.spread, v = ui.view;
+  if (dir > 0) {
+    if (v === 'info' && S[k].left) return go('chart', true);
+    if (k < S.length - 1) return turnTo(k + 1, 'info');
+  } else {
+    if (v === 'chart') return go('info', true);
+    if (k > 0) return turnTo(k - 1, S[k - 1].left ? 'chart' : 'info');
   }
 }
 
 async function openFile(p) {
-  ui.p = p; ui.view = 'cover'; ui.open = 0; ui.flipped = false; ui.procSheet = 0; ui.paySheet = 0; ui.zoom = 1;
+  ui.p = p; ui.view = 'cover'; ui.open = 0; ui.flipped = false; ui.procSheet = 0; ui.paySheet = 0; ui.zoom = 1; ui.spread = 0;
+  ui.fileNo0 = p.fileNo;
   $('#home').hidden = true; $('#file').hidden = false;
   history.pushState({ file: p.id }, '', '#' + p.id);
   updateTitle();
@@ -480,8 +775,11 @@ function shade(p) {
   F.info.style.setProperty('--shade', (s * 0.5).toFixed(3));
 }
 
-async function go(view) {
-  if (ui.busy || view === ui.view) return;
+async function go(view, internal) {
+  if (ui.busy) return;
+  // أزرار التنقل تحت بترجع للوش الأصلي للملف (الغلاف من جوه = صفحة الأسنان الأصلية)
+  if (ui.spread && (!internal || view === 'cover' || view === 'back')) { ui.spread = 0; ui.procSheet = 0; renderPages(['info', 'chart']); updateCtx(); }
+  if (view === ui.view) return;
   ui.busy = true;
   const folder = $('#folder');
   try {
@@ -503,7 +801,8 @@ async function go(view) {
 }
 function setNav() {
   const v = ui.mode === 'spread' && ui.view === 'chart' ? 'info' : ui.view;
-  document.querySelectorAll('#seg button').forEach(b => b.classList.toggle('on', b.dataset.go === v));
+  const extra = ui.spread && ui.mode === 'single'; // صفحة إضافية — مش «البيانات» ولا «الأسنان» الأصلية
+  document.querySelectorAll('#seg button').forEach(b => b.classList.toggle('on', b.dataset.go === v && !extra));
 }
 
 /* سحب الغلاف بالإيد — نفس إحساس فتح الملف */
@@ -525,6 +824,11 @@ function setNav() {
       if (Math.abs(dx) < 8 || Math.abs(dx) < Math.abs(dy) * 1.2) { if (Math.abs(dy) > 12) st = null; return; }
       // الغلاف يتسحب من الغلاف نفسه، أو من صفحة الأسنان لقفله
       if (ui.mode === 'single' && ui.open >= 1) { st.swipe = true; }
+      // الكمبيوتر: سحب الصفحة اليمين لشمال = الصفحة اللي بعدها، والعكس
+      else if (ui.mode === 'spread' && ui.open >= 1 && spreads().length > 1 && (ui.spread > 0 || (st.pg === 'info' && dx < 0))) {
+        if (st.interactive && !ui.sheetEdit) { st = null; return; } // تحديد كلام جوه خانة مش قلب صفحة
+        st.swipe = 'book';
+      }
       else if (!(st.pg === 'front' || st.pg === 'chart' || (st.pg === 'info' && dx > 0))) { st = null; return; }
       if (!st.swipe) unsettle();
       st.moved = true; if (!st.swipe) $('#folder').classList.add('nofx');
@@ -549,8 +853,13 @@ function setNav() {
     }
     if (s.swipe) {
       const dx = e.clientX - s.x;
-      if (dx > 40 && ui.view === 'info') go('chart');
-      else if (dx < -40 && ui.view === 'chart') go('info');
+      if (s.swipe === 'book') {
+        if (dx < -40 && ui.spread + 1 < spreads().length) turnTo(ui.spread + 1);
+        else if (dx > 40 && ui.spread > 0) turnTo(ui.spread - 1);
+        return;
+      }
+      if (dx > 40) pageStep(1);
+      else if (dx < -40) pageStep(-1);
       return;
     }
     const target = s.p == null ? s.p0 : (s.p > (s.p0 ? 0.75 : 0.25) ? 1 : 0);
@@ -565,6 +874,7 @@ function setNav() {
 function updateCtx() {
   const ctx = $('#ctx'); ctx.innerHTML = '';
   if (!ui.p) return;
+  setNav();
   const sheetPill = (label, cur, n, onGo) => {
     const d = el('div', 'pill');
     const prev = el('button'); prev.textContent = '›'; prev.disabled = cur <= 0; prev.onclick = () => onGo(cur - 1);
@@ -583,16 +893,32 @@ function updateCtx() {
     sum.innerHTML = `المدفوع: <b>${fmt(paid)}</b> &nbsp;·&nbsp; الباقي: <b class="${last < 0 ? 'neg' : ''}">${last == null ? '—' : fmt(last)}</b>`;
     ctx.append(sum);
   }
-  if (v === 'info' || (v === 'chart' && ui.mode === 'single')) {
-    if (v === 'info') {
+  if (v === 'info' || v === 'chart') {
+    const S = spreads(), sp = S[ui.spread] || S[0];
+    if (v === 'info' && !ui.spread) {
       const n = sheetsOf(ui.p.procs, 26, procFilled);
       if (n > 1) ctx.append(sheetPill('ورقة الإجراءات', ui.procSheet, n, i => { ui.procSheet = i; renderPages(['info']); updateCtx(); }));
     }
-  }
-  if ((v === 'chart' || (v === 'info' && ui.mode === 'spread'))) {
-    const lg = el('div', 'legend');
-    for (const s of STATUS) { const i = el('i'); i.style.background = s.c; i.textContent = s.t; lg.append(i); }
-    ctx.append(lg);
+    // صفحات جوه الملف + زرار «زوّد صفحة»
+    const d = el('div', 'pill pages');
+    const total = flatPages().length;
+    const idx = S.slice(0, ui.spread).reduce((n, s) => n + (s.left ? 2 : 1), 0) + (ui.mode === 'single' && v === 'chart' ? 1 : 0);
+    const atEnd = ui.mode === 'spread' ? ui.spread >= S.length - 1 : (idx >= total - 1);
+    const prev = el('button'); prev.textContent = '›'; prev.title = 'الصفحة اللي قبلها'; prev.disabled = idx <= 0;
+    const next = el('button'); next.textContent = '‹'; next.title = 'الصفحة اللي بعدها'; next.disabled = atEnd;
+    prev.onclick = () => (ui.mode === 'spread' ? turnTo(ui.spread - 1) : pageStep(-1));
+    next.onclick = () => (ui.mode === 'spread' ? turnTo(ui.spread + 1) : pageStep(1));
+    const t = el('span');
+    t.textContent = ui.mode === 'spread' && sp.left ? `صفحة ${idx + 1} و ${idx + 2} من ${total}` : `صفحة ${idx + 1} من ${total}`;
+    const add = el('button', 'add'); add.textContent = '+ صفحة'; add.title = 'زوّد صفحة للملف'; add.onclick = addPageSheet;
+    d.append(prev, t, next, add);
+    ctx.append(d);
+    const kinds = ui.mode === 'spread' ? [sp.right, sp.left] : [v === 'chart' ? sp.left : sp.right];
+    if (kinds.some(x => x && x.kind === 'chart')) {
+      const lg = el('div', 'legend');
+      for (const s of STATUS) { const i = el('i'); i.style.background = s.c; i.textContent = s.t; lg.append(i); }
+      ctx.append(lg);
+    }
   }
 }
 
@@ -613,7 +939,7 @@ function openSheet(title, body, buttons) {
 function closeSheet() { $('#sheet').hidden = true; }
 
 function editSheet(f, value, apply) {
-  const area = f.type === 'area' || /^(procs\.\d+\.t|.*Notes|pays\.\d+\.notes)$/.test(f.k);
+  const area = f.type === 'area' || /(procs\.\d+\.t|Notes|pays\.\d+\.notes|notes\.\d+\.t)$/.test(f.k);
   const inp = el(area ? 'textarea' : 'input');
   inp.value = value || '';
   if (f.type === 'tel') { inp.inputMode = 'tel'; inp.dir = 'ltr'; }
@@ -630,9 +956,11 @@ function editSheet(f, value, apply) {
   inp.addEventListener('keydown', e => { if (e.key === 'Enter' && !area) { apply(inp.value); closeSheet(); } });
 }
 
-function toothSheet(id) {
+function toothSheet(id, tk = 'teeth') {
   const t = TEETH.find(x => x.id === id);
-  const cur = Object.assign({}, (ui.p.teeth || {})[id]);
+  if (!getK(ui.p, tk)) setK(ui.p, tk, {});
+  const teeth = getK(ui.p, tk);
+  const cur = Object.assign({}, teeth[id]);
   const chips = el('div', 'chips');
   const none = el('button', 'none'); none.textContent = 'بدون';
   const all = [none];
@@ -646,11 +974,10 @@ function toothSheet(id) {
   const note = el('input'); note.value = cur.n || ''; note.placeholder = 'مثال: سطح طاحن — جلسة أولى';
   // أي اختيار بيتسجل على الصفحة على طول (✓ جنب السنة + اسم المشكلة على السطر)
   const commit = () => {
-    ui.p.teeth = ui.p.teeth || {};
     cur.n = note.value.trim();
-    if (!cur.s && !cur.n) delete ui.p.teeth[id]; else ui.p.teeth[id] = { s: cur.s || '', n: cur.n };
-    touch(`teeth.${id}`);
-    save(); renderPages(['chart']);
+    if (!cur.s && !cur.n) delete teeth[id]; else teeth[id] = { s: cur.s || '', n: cur.n };
+    touch(`${tk}.${id}`);
+    save(); renderPages(['chart', 'info']);
   };
   const mark = () => all.forEach(b => b.classList.toggle('on', (b.dataset.s || '') === (cur.s || '')));
   all.forEach(b => b.addEventListener('click', () => { mark(); commit(); }));
@@ -662,17 +989,15 @@ function toothSheet(id) {
     [['تم', 'ok', commit]]);
 }
 
-function signatureSheet() {
+function signatureSheet(sk = 'signature') {
   const c = el('canvas', 'sigpad');
   const body = [Object.assign(el('label'), { textContent: 'المريض يمضي هنا بصباعه أو بالماوس' }), c];
   let drawn = false;
+  const set = v => { setK(ui.p, sk, v); touch(sk); save(); renderPages(['info', 'chart']); };
   openSheet('التوقيع', body, [
-    ['حفظ', 'ok', () => {
-      if (!drawn) return false;
-      ui.p.signature = trimCanvas(c); touch('signature'); save(); renderPages(['info']);
-    }],
+    ['حفظ', 'ok', () => { if (!drawn) return false; set(trimCanvas(c)); }],
     ['مسح', 'no', () => { const x = c.getContext('2d'); x.clearRect(0, 0, c.width, c.height); drawn = false; return false; }],
-    ...(ui.p.signature ? [['شيل التوقيع', 'del', () => { ui.p.signature = ''; touch('signature'); save(); renderPages(['info']); }]] : []),
+    ...(getK(ui.p, sk) ? [['شيل التوقيع', 'del', () => set('')]] : []),
   ]);
   requestAnimationFrame(() => {
     const r = c.getBoundingClientRect(), dpr = devicePixelRatio || 1;
@@ -700,19 +1025,58 @@ function trimCanvas(c) {
 /* ====================== طباعة / حذف / نسخ احتياطي ====================== */
 function printFile() {
   const pr = $('#print'); pr.innerHTML = '';
-  for (const k of ['front', 'info', 'chart', 'back']) { const pp = el('div', 'pp'); pp.append(buildPage(k, ui.p, 'print')); pr.append(pp); }
-  const imgs = [...pr.querySelectorAll('img')];
+  // الغلاف ← صفحات جوه بالترتيب (الأصلية وبعدها الإضافية) ← ضهر الملف
+  const pages = [{ kind: 'front' }, ...flatPages(), { kind: 'back' }];
+  for (const d of pages) { const pp = el('div', 'pp'); pp.append(buildPage(d.kind, ui.p, 'print', d.id)); pr.append(pp); }
+  printWhenReady();
+}
+function printWhenReady() {
+  const imgs = [...$('#print').querySelectorAll('img')];
   Promise.all(imgs.map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; }))).then(() => setTimeout(() => window.print(), 50));
 }
 async function deleteFile() {
   if (!confirm(`حذف ملف «${ui.p.name || 'بدون اسم'}» نهائياً؟ مش هينفع ترجعه إلا من نسخة احتياطية.`)) return;
   clearTimeout(saveT);
+  const n = num(ui.p.fileNo);
   ui.p.deleted = true; touch('deleted'); ui.p.updatedAt = Date.now();
-  await DB.put(ui.p); ui.p = null; toast('اتحذف الملف'); Sync.soon(); showHome();
+  await DB.put(ui.p); ui.p = null; toast('اتحذف الملف'); Sync.soon();
+  await showHome();
+  // الملفات اللي بعده: نعدّل ترقيمهم (ينزلوا رقم) — ولا نسيب الرقم فاضي ياخده أول ملف جديد
+  const after = n == null ? [] : (await DB.all()).filter(p => !p.deleted && num(p.fileNo) > n);
+  if (!after.length) return;
+  const msg = el('p', 'hint');
+  msg.textContent = `فيه ${after.length} ملف رقمهم بعد ${n}. تحب ترقيمهم يتعدل (كل ملف ينزل رقم واحد) عشان الأرقام تفضل ورا بعض؟`;
+  openSheet('ترقيم الملفات', [msg], [
+    [`عدّل الترقيم`, 'ok', async () => {
+      const now = Date.now();
+      for (const p of after) { p.fileNo = String(num(p.fileNo) - 1); (p._t = p._t || {}).fileNo = now; p.updatedAt = now; await DB.put(p); }
+      Sync.soon(); toast(`اتعدّل ترقيم ${after.length} ملف`); showHome();
+    }],
+    [`سيب الأرقام زي ما هي`, 'no', () => toast(`رقم ${n} هياخده أول ملف جديد`)],
+  ]);
+}
+// رقم ملف متكرر أو فاضي ← تنبيه + الرقم اللي عليه الدور
+async function checkFileNo() {
+  const p = ui.p; if (!p) return;
+  const n = num(p.fileNo);
+  const others = (await DB.all()).filter(x => !x.deleted && x.id !== p.id);
+  const dup = n != null && others.find(x => num(x.fileNo) === n);
+  const setNo = v => { setField('fileNo', String(v)); document.querySelectorAll('#folder .f[data-k="fileNo"]').forEach(i => { i.value = String(v); i._fit && i._fit(); }); };
+  const next = nextFileNo(others);
+  if (n == null) { setNo(next); toast(`رقم الملف اتظبط على ${next}`); return; }
+  if (!dup) return;
+  const msg = el('p', 'hint');
+  msg.textContent = `الرقم ${n} موجود بالفعل لملف «${dup.name || 'بدون اسم'}». الرقم اللي عليه الدور: ${next}.`;
+  const old = num(ui.fileNo0);
+  const canOld = old != null && old !== n && old !== next && !others.some(x => num(x.fileNo) === old);
+  openSheet('رقم الملف مكرر', [msg], [
+    [`خليه ${next}`, 'ok', () => setNo(next)],
+    ...(canOld ? [[`رجّعه ${old}`, 'no', () => setNo(old)]] : []),
+  ]);
 }
 async function backup() {
-  const all = await DB.all();
-  const blob = new Blob([JSON.stringify({ app: 'bloom-clinic', version: 1, exportedAt: new Date().toISOString(), patients: all })], { type: 'application/json' });
+  const all = await DB.all(), fin = await DB.allF();
+  const blob = new Blob([JSON.stringify({ app: 'bloom-clinic', version: 2, exportedAt: new Date().toISOString(), patients: all, fin })], { type: 'application/json' });
   const a = el('a'); a.href = URL.createObjectURL(blob);
   const d = new Date(); a.download = `Bloom-Backup-${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}.json`;
   document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
@@ -729,7 +1093,12 @@ async function restore(file) {
       const old = cur[p.id];
       if (!old) { await DB.put(p); added++; } else if ((p.updatedAt || 0) > (old.updatedAt || 0)) { const m = SyncCore.merge(old, p); m._syncedAt = old._syncedAt || 0; await DB.put(m); updated++; }
     }
-    toast(`اتضاف ${added} ملف واتحدث ${updated}`); Sync.soon(); showHome();
+    for (const x of data.fin || []) {
+      if (!x || !x.id) continue;
+      const old = await DB.getF(x.id);
+      if (!old) await DB.putF(x); else if ((x.updatedAt || 0) > (old.updatedAt || 0)) { const m = SyncCore.merge(old, x); m._syncedAt = old._syncedAt || 0; await DB.putF(m); }
+    }
+    toast(`اتضاف ${added} ملف واتحدث ${updated}`); Sync.soon(); showHome(); if (window.Fin) Fin.reload();
   } catch (_) { toast('الملف ده مش نسخة احتياطية صحيحة'); }
 }
 
@@ -784,14 +1153,15 @@ const Sync = {
   async pendingList() {
     const all = await DB.all();
     if (ui.p) { const i = all.findIndex(p => p.id === ui.p.id); if (i >= 0) all[i] = ui.p; }
-    return all.filter(p => (p.updatedAt || 0) > (p._syncedAt || 0));
+    const fin = (await DB.allF()).map(x => (x.kind = 'fin', x)); // حسابات العيادة بتتزامن مع الملفات
+    return all.concat(fin).filter(p => (p.updatedAt || 0) > (p._syncedAt || 0));
   },
   async run() {
     if (!this.cfg) return;
     if (this.busy) { this.again = true; return; }
     if (!navigator.onLine) { this.state = 'offline'; this.paint(); return; }
     this.busy = true; this.state = 'sync'; this.paint();
-    let changedOpen = false, changedList = false;
+    let changedOpen = false, changedList = false, changedFin = false;
     try {
       if (ui.p) { clearTimeout(saveT); await DB.put(ui.p); }
       const queue = (await this.pendingList()).map(p => { const c = SyncCore.clone(p); delete c._syncedAt; delete c._dirty; return c; });
@@ -801,6 +1171,7 @@ const Sync = {
         const res = await this.post({ op: 'sync', since: this.cfg.cursor || 0, push });
         for (const r of res.pull) {
           const ch = await this.applyRemote(r);
+          if (ch === 'fin') { changedFin = true; continue; }
           if (ch === 'open') changedOpen = true;
           if (ch) changedList = true;
         }
@@ -812,12 +1183,21 @@ const Sync = {
       this.state = navigator.onLine ? 'err' : 'offline'; this.err = String(e.message || e);
     } finally { this.busy = false; }
     if (changedOpen) refreshOpen();
+    if (changedFin && window.Fin) Fin.reload(true);
     if (changedList && !$('#home').hidden) { patients = (await DB.all()).filter(p => !p.deleted); renderList(); }
     this.paint();
     if (this.again) { this.again = false; this.run(); }
   },
   // يدمج نسخة جاية من السيرفر مع النسخة اللي على الجهاز
   async applyRemote(r) {
+    if (r.kind === 'fin') {
+      const local = await DB.getF(r.id);
+      const merged = SyncCore.merge(local, r);
+      merged._syncedAt = local && (local.updatedAt || 0) > (r.updatedAt || 0) ? r.updatedAt : merged.updatedAt;
+      const same = local && stable({ ...local, _syncedAt: 0, _dirty: 0 }) === stable({ ...merged, _syncedAt: 0, _dirty: 0 });
+      await DB.putF(merged);
+      return same ? false : 'fin';
+    }
     const open = ui.p && ui.p.id === r.id;
     const local = open ? ui.p : await DB.get(r.id);
     const merged = SyncCore.merge(local, r);
@@ -853,7 +1233,7 @@ function refreshOpen() {
   const F = faces(), act = document.activeElement;
   for (const k in F) {
     if (act && F[k].contains(act) && act.matches('.f')) {
-      F[k].querySelectorAll('.f').forEach(i => { if (i !== act) i.value = getK(ui.p, i.dataset.k) ?? ''; });
+      F[k].querySelectorAll('.f').forEach(i => { if (i !== act) { i.value = getK(ui.p, i.dataset.k) ?? ''; i._fit && i._fit(); } });
       F[k].querySelectorAll('.cb').forEach(c => c.classList.toggle('on', !!getK(ui.p, c.dataset.k)));
       const rems = payRemains(ui.p.pays); F[k].querySelectorAll('[data-rem]').forEach(c => showRem(c, rems[+c.dataset.rem]));
     } else renderPages([k]);
@@ -911,7 +1291,11 @@ function linkDeviceSheet() {
 /* ====================== تشغيل ====================== */
 async function boot() {
   await DB.open();
+  // الخط لازم يبقى محمّل قبل ما نقيس الكلام على قد الخانات
+  try { await Promise.race([Promise.all(['800 12px Tajawal', '700 12px Tajawal'].map(f => document.fonts.load(f))), wait(2500)]); } catch (_) {}
   $('#q').addEventListener('input', renderList);
+  try { $('#sort').value = localStorage.getItem('bloom-sort') || 'upd'; } catch (_) {}
+  $('#sort').addEventListener('change', () => { try { localStorage.setItem('bloom-sort', $('#sort').value); } catch (_) {} renderList(); });
   $('#btnNew').onclick = async () => {
     // نزامن الأول (لحد 4 ثواني) عشان رقم الملف الجديد ما يتكررش مع جهاز تاني
     if (Sync.cfg && navigator.onLine) { await Promise.race([Sync.run(), wait(4000)]); patients = (await DB.all()).filter(p => !p.deleted); }
@@ -926,6 +1310,8 @@ async function boot() {
   $('#btnRestore').onclick = () => $('#restoreFile').click();
   $('#restoreFile').onchange = e => { const f = e.target.files[0]; if (f) restore(f); e.target.value = ''; };
   document.querySelectorAll('#seg button').forEach(b => (b.onclick = () => go(b.dataset.go)));
+  // ملفات المرضى ↔ حسابات العيادة
+  document.querySelectorAll('#appTabs button').forEach(b => (b.onclick = () => showApp(b.dataset.app)));
   let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (!$('#file').hidden) layout(); }, 120); });
   addEventListener('popstate', () => { if (!$('#file').hidden) { if (ui.p) DB.put(ui.p); ui.p = null; showHome(); } });
   addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#sheet').hidden) closeSheet(); });
@@ -936,8 +1322,18 @@ async function boot() {
   if (id.startsWith('sync=')) { history.replaceState(null, '', location.pathname + location.search); await Sync.connect(id.slice(5)); }
   if (TEST) return testMode();
   await showHome();
-  if (id && !id.startsWith('sync=')) { const p = patients.find(x => x.id === id); if (p) openFile(p); }
+  let app = 'files'; try { app = localStorage.getItem('bloom-app') || 'files'; } catch (_) {}
+  if (id === 'fin') app = 'fin';
+  showApp(app);
+  if (id && !id.startsWith('sync=') && id !== 'fin') { const p = patients.find(x => x.id === id); if (p) openFile(p); }
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+function showApp(app) {
+  const fin = app === 'fin';
+  document.querySelectorAll('#appTabs button').forEach(b => b.classList.toggle('on', b.dataset.app === app));
+  $('#filesPanel').hidden = fin; $('#finPanel').hidden = !fin;
+  try { localStorage.setItem('bloom-app', app); } catch (_) {}
+  if (fin) Fin.show();
 }
 async function testMode() {
   patients = await DB.all();
@@ -954,7 +1350,8 @@ async function testMode() {
     });
     await DB.put(p); patients = [p];
   }
-  if (TEST === 'home') return showHome();
+  if (TEST === 'home') return showHome().then(() => showApp('files'));
+  if (TEST === 'fin') { await showHome(); return showApp('fin'); }
   await openFile(patients[0]);
   if (TEST !== 'cover') { ui.view = TEST; ui.open = TEST === 'back' ? 0 : 1; ui.flipped = TEST === 'back'; applyGeometry(true); setNav(); updateCtx(); }
 }

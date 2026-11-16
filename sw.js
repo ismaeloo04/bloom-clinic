@@ -1,5 +1,5 @@
 // يشغّل الأبلكيشن من غير نت بعد أول فتح
-const V = 'bloom-v8';
+const V = 'bloom-v9';
 const SHELL = ['./', 'index.html', 'app.css', 'sync-core.js', 'app.js', 'manifest.webmanifest',
   'img/front.webp', 'img/back.webp', 'img/logo-white.png', 'img/graficoo-white.png', 'img/chart.webp', 'img/info.webp',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-180.png', 'icons/favicon.png'];

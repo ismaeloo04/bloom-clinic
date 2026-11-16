@@ -36,9 +36,9 @@ const FIELDS = {
     { k: 'job', label: 'الوظيفة', x: 21.3, y: 79.7, w: 201.5, h: 19.5, fs: 10 },
     { k: 'medNotes', label: 'ملاحظات (التاريخ الطبي)', x: 21.4, y: 199.8, w: 133.1, h: 30, fs: 7.4, type: 'area', indent: 41, lh: 9.6 },
     { k: 'dentalNotes', label: 'ملاحظات (صحة الأسنان)', x: 21.3, y: 274.2, w: 235.2, h: 14, fs: 7.8, indent: 50 },
-    { k: 'consentName', label: 'إقر انا (اسم المريض)', x: 300.5, y: 795.4, w: 232, h: 11, fs: 8, c: 1, auto: 'name' },
-    { k: 'consentDay', label: 'وذلك يوم', x: 466, y: 807.6, w: 52, h: 11, fs: 7.4, c: 1, type: 'day' },
-    { k: 'consentDate', label: 'الموافق', x: 378, y: 807.6, w: 58, h: 11, fs: 7.4, c: 1, type: 'date' },
+    { k: 'consentName', label: 'إقر انا (اسم المريض)', x: 300.5, y: 797.3, w: 231, h: 11.6, fs: 8, c: 1, auto: 'name', box: 1 },
+    { k: 'consentDay', label: 'وذلك يوم', x: 468, y: 810.2, w: 48, h: 11.6, fs: 7.6, c: 1, type: 'day', box: 1 },
+    { k: 'consentDate', label: 'الموافق', x: 378, y: 810.2, w: 53, h: 11.6, fs: 7.6, c: 1, type: 'date', box: 1 },
   ],
 };
 const CHECKS = {
@@ -213,7 +213,7 @@ function buildPage(kind, p, mode) {
 
   const mkInput = (f, value, onInput, extra = {}) => {
     const isArea = f.type === 'area';
-    const inp = el(isArea ? 'textarea' : 'input', 'f' + (f.c ? ' c' : '') + (f.type === 'tel' || f.type === 'num' ? ' ltr' : ''));
+    const inp = el(isArea ? 'textarea' : 'input', 'f' + (f.c ? ' c' : '') + (f.box ? ' boxed' : '') + (f.type === 'tel' || f.type === 'num' ? ' ltr' : ''));
     if (!isArea) inp.type = 'text';
     if (f.type === 'tel') inp.inputMode = 'tel';
     if (f.type === 'num') inp.inputMode = 'decimal';

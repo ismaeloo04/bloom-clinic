@@ -1,6 +1,6 @@
 :root{
   --navy:#0b2033; --navy2:#13304a; --sage:#618581; --sage2:#446a66; --ink:#0b2033;
-  --paper:#f3f1ee; --line:#d9d5cf; --muted:#6b7a86; --red:#c0392b;
+  --paper:#f3f1ee; --box:#e5e5e5; --line:#d9d5cf; --muted:#6b7a86; --red:#c0392b;
   --font:'Tajawal', 'Segoe UI', Tahoma, sans-serif;
   --safe-b: env(safe-area-inset-bottom, 0px);
 }
@@ -97,6 +97,9 @@ button{font-family:inherit;cursor:pointer}
 .page img.bg{position:absolute;inset:0;width:100%;height:100%;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .f{position:absolute;margin:0;border:0;outline:0;background:transparent;color:var(--ink);font-family:var(--font);font-weight:700;direction:rtl;text-align:right;padding:0 5px;border-radius:4px;line-height:1;resize:none}
 .f.c{text-align:center;padding:0}
+/* خانات كانت نقط في الورق — بقت مربعات رمادي زي باقي الملف */
+.f.boxed{background:var(--box);border-radius:3px}
+.f.boxed:hover,.f.boxed:focus{background:#d6dcdb}
 .f.ltr{direction:ltr;text-align:right}
 .f.c.ltr{text-align:center}
 .f::placeholder{color:#0b203344;font-weight:500}
@@ -121,7 +124,8 @@ textarea.f{padding:1px 4px;overflow:hidden;white-space:pre-wrap}
 .t-box::before{content:"";position:absolute;inset:-4px -3px}
 .t-box.on::after{content:"";position:absolute;left:50%;top:42%;width:30%;height:58%;border:solid var(--navy);border-width:0 2px 2px 0;transform:translate(-50%,-50%) rotate(45deg)}
 .t-note{position:absolute;font-size:6.6px;font-weight:700;color:var(--navy);display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;cursor:pointer;line-height:1;border-radius:2px}
-.t-note span{background:#fff;padding:0 2px;border-radius:2px;overflow:hidden;text-overflow:ellipsis;max-width:100%;border-bottom:1.6px solid var(--tc,transparent)}
+.t-note{font-size:7px}
+.t-note span{padding:0 3px;overflow:hidden;text-overflow:ellipsis;max-width:100%;border-bottom:1.6px solid var(--tc,transparent)}
 .t-crown{position:absolute;border-radius:46%;cursor:pointer;mix-blend-mode:multiply}
 /* لما الماوس ييجي على سنة: السنة وسطرها ومربعها ينوروا مع بعض */
 .t-crown.hl{background:#61858155!important}

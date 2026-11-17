@@ -165,16 +165,19 @@ const DB = {
 if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 
 let patients = [];
-// الرقم اللي عليه الدور = أصغر رقم مش مستخدم في الملفات الموجودة (الملف المحذوف رقمه بيرجع متاح)
-function nextFileNo(pool) {
-  const used = new Set(pool.filter(p => !p.deleted).map(p => num(p.fileNo)).filter(v => v != null));
-  let n = 1; while (used.has(n)) n++;
-  return n;
+// أرقام الملفات ثابتة: لو ملف اتحذف، باقي الملفات أرقامها ما بتتغيرش ورقمه بيفضل «فاضي»
+// الرقم اللي عليه الدور = بعد آخر رقم؛ والرقم الفاضي بيتسجل فيه بس لو انت اخترت ده
+function usedNos(pool) { return pool.filter(p => !p.deleted).map(p => num(p.fileNo)).filter(v => v != null && v > 0); }
+function nextFileNo(pool) { return usedNos(pool).reduce((m, v) => Math.max(m, v), 0) + 1; }
+function freeNos(pool) {
+  const u = new Set(usedNos(pool)), max = nextFileNo(pool) - 1, r = [];
+  for (let i = 1; i < max; i++) if (!u.has(i)) r.push(i);
+  return r;
 }
-function newPatient(pool = patients) {
+function newPatient(pool = patients, no) {
   const now = Date.now();
   return {
-    id: uid(), fileNo: String(nextFileNo(pool)), name: '', mobile: '', firstVisit: today(), address: '', job: '', age: '',
+    id: uid(), fileNo: String(no || nextFileNo(pool)), name: '', mobile: '', firstVisit: today(), address: '', job: '', age: '',
     med: {}, medNotes: '', smoker: false, brush: false, dentalNotes: '', plan: {},
     procs: [], pays: [], teeth: {}, consentName: '', consentDay: '', consentDate: '', signature: '', xp: {},
     createdAt: now, updatedAt: now,
@@ -202,6 +205,7 @@ function renderList() {
     .filter(p => !q || [p.name, toEn(p.mobile), toEn(p.fileNo)].some(v => String(v || '').toLowerCase().includes(q)))
     .sort(SORTS[$('#sort').value] || SORTS.upd);
   $('#count').textContent = patients.length ? `${rows.length} من ${patients.length} ملف` : '';
+  renderGaps();
   $('#sortBox').hidden = patients.length < 2;
   if (!rows.length) {
     list.classList.remove('stack');
@@ -1041,18 +1045,55 @@ async function deleteFile() {
   ui.p.deleted = true; touch('deleted'); ui.p.updatedAt = Date.now();
   await DB.put(ui.p); ui.p = null; toast('اتحذف الملف'); Sync.soon();
   await showHome();
-  // الملفات اللي بعده: نعدّل ترقيمهم (ينزلوا رقم) — ولا نسيب الرقم فاضي ياخده أول ملف جديد
-  const after = n == null ? [] : (await DB.all()).filter(p => !p.deleted && num(p.fileNo) > n);
-  if (!after.length) return;
+  // باقي الملفات أرقامها زي ما هي — ورقم الملف المحذوف بقى فاضي
+  if (n == null || !freeNos(await DB.all()).includes(n)) return;
   const msg = el('p', 'hint');
-  msg.textContent = `فيه ${after.length} ملف رقمهم بعد ${n}. تحب ترقيمهم يتعدل (كل ملف ينزل رقم واحد) عشان الأرقام تفضل ورا بعض؟`;
-  openSheet('ترقيم الملفات', [msg], [
-    [`عدّل الترقيم`, 'ok', async () => {
+  msg.innerHTML = `رقم <b>${n}</b> بقى فاضي.<br>أرقام باقي الملفات ما اتغيرتش. تقدر تسجّل مريض جديد في الرقم ده، أو ترحّل الأرقام عشان تفضل ورا بعض من غير فراغات.`;
+  openSheet(`رقم ${n} بقى فاضي`, [msg], [
+    [`سجّل مريض جديد في رقم ${n}`, 'ok', () => createFile(n)],
+    ['رحّل الأرقام', 'no', () => { compactNos(); return false; }],
+    ['سيبه فاضي', 'no', () => toast(`رقم ${n} هيفضل ظاهر في «أرقام فاضية» لحد ما تسجّل فيه`)],
+  ]);
+}
+// ملف جديد — برقم معيّن (رقم فاضي) أو بعد آخر رقم
+async function createFile(no) {
+  const all = await DB.all();
+  if (no != null && usedNos(all).includes(no)) { toast(`رقم ${no} اتاخد خلاص — هياخد ${nextFileNo(all)}`); no = null; }
+  const p = newPatient(all, no); await DB.put(p); patients.push(p); openFile(p);
+  if (no != null) toast(`ملف جديد برقم ${no}`);
+}
+// شريط «أرقام فاضية» في الصفحة الرئيسية
+function renderGaps() {
+  const box = $('#gaps'), free = freeNos(patients);
+  box.hidden = !free.length; box.innerHTML = '';
+  if (!free.length) return;
+  box.append(Object.assign(el('span'), { textContent: `⚠ ${free.length > 1 ? 'أرقام فاضية' : 'رقم فاضي'}:` }));
+  const MAX = 10;
+  for (const n of free.slice(0, MAX)) {
+    const b = el('button', 'gap'); b.textContent = n; b.title = `سجّل مريض جديد في رقم ${n}`;
+    b.onclick = () => createFile(n);
+    box.append(b);
+  }
+  if (free.length > MAX) box.append(Object.assign(el('span'), { textContent: `+${free.length - MAX}` }));
+  const r = el('button', 'gap-fix'); r.textContent = 'رحّل الأرقام'; r.onclick = compactNos;
+  box.append(r);
+}
+// ترحيل الأرقام: كل الملفات تترقم 1، 2، 3… بنفس ترتيبها من غير فراغات (وبتصلّح المكرر)
+async function compactNos() {
+  const all = (await DB.all()).filter(p => !p.deleted && num(p.fileNo) != null)
+    .sort((a, b) => num(a.fileNo) - num(b.fileNo) || a.createdAt - b.createdAt);
+  const ch = all.map((p, i) => [p, i + 1]).filter(([p, n]) => num(p.fileNo) !== n);
+  if (!ch.length) { closeSheet(); toast('الأرقام مترتبة ومفيش فراغات'); return; }
+  const msg = el('div', 'hint');
+  const ex = ch.slice(0, 4).map(([p, n]) => `«${esc(p.name || 'بدون اسم')}»: من ${p.fileNo} لـ ${n}`).join('<br>');
+  msg.innerHTML = `هيتغير رقم <b>${ch.length}</b> ملف عشان الأرقام تبقى ورا بعض من 1 لـ ${all.length}:<br><small>${ex}${ch.length > 4 ? '<br>…' : ''}</small><br><br>⚠ لو فيه ملفات ورق أو كروت مكتوب عليها الأرقام القديمة، لازم تتعدل هي كمان.`;
+  openSheet('ترحيل أرقام الملفات', [msg], [
+    ['رحّل الأرقام', 'ok', async () => {
       const now = Date.now();
-      for (const p of after) { p.fileNo = String(num(p.fileNo) - 1); (p._t = p._t || {}).fileNo = now; p.updatedAt = now; await DB.put(p); }
-      Sync.soon(); toast(`اتعدّل ترقيم ${after.length} ملف`); showHome();
+      for (const [p, n] of ch) { p.fileNo = String(n); (p._t = p._t || {}).fileNo = now; p.updatedAt = now; await DB.put(p); }
+      Sync.soon(); toast(`اتعدّل رقم ${ch.length} ملف`); showHome();
     }],
-    [`سيب الأرقام زي ما هي`, 'no', () => toast(`رقم ${n} هياخده أول ملف جديد`)],
+    ['إلغاء', 'no', () => {}],
   ]);
 }
 // رقم ملف متكرر أو فاضي ← تنبيه + الرقم اللي عليه الدور
@@ -1300,7 +1341,22 @@ async function boot() {
     // نزامن الأول (لحد 4 ثواني) عشان رقم الملف الجديد ما يتكررش مع جهاز تاني
     if (Sync.cfg && navigator.onLine) { await Promise.race([Sync.run(), wait(4000)]); patients = (await DB.all()).filter(p => !p.deleted); }
     const all = await DB.all();
-    const p = newPatient(all); await DB.put(p); patients.push(p); openFile(p);
+    const free = freeNos(all), next = nextFileNo(all);
+    if (!free.length) return createFile();
+    // فيه رقم فاضي (ملفه اتحذف) ← نسأل نسجّل فيه ولا بعد آخر رقم
+    const msg = el('div', 'hint');
+    msg.innerHTML = free.length === 1
+      ? `رقم <b>${free[0]}</b> فاضي (ملفه اتحذف). تسجّل المريض الجديد فيه؟`
+      : `فيه ${free.length} أرقام فاضية (ملفاتها اتحذفت). اختار رقم منهم، أو سجّل بعد آخر رقم:`;
+    if (free.length > 1) {
+      const row = el('div', 'gap-pick');
+      for (const n of free.slice(0, 30)) { const b = el('button', 'gap'); b.textContent = n; b.onclick = () => { closeSheet(); createFile(n); }; row.append(b); }
+      msg.append(row);
+    }
+    openSheet('ملف جديد', [msg], [
+      [`سجّل في رقم ${free[0]}`, 'ok', () => createFile(free[0])],
+      [`رقم جديد ${next}`, 'no', () => createFile()],
+    ]);
   };
   $('#btnClose').onclick = () => { if (ui.p) DB.put(ui.p); ui.p = null; showHome(); };
   $('#btnPrint').onclick = printFile;

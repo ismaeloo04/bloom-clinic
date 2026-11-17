@@ -1304,6 +1304,8 @@ async function boot() {
   };
   $('#btnClose').onclick = () => { if (ui.p) DB.put(ui.p); ui.p = null; showHome(); };
   $('#btnPrint').onclick = printFile;
+  // حساب المريض (زياراته ودفعاته) في حسابات العيادة
+  $('#btnAcc').onclick = async () => { const id = ui.p.id; await DB.put(ui.p); ui.p = null; await showHome(); showApp('fin'); await Fin.load(); Fin.openPatient(id); };
   $('#btnDelete').onclick = deleteFile;
   $('#btnZoom').onclick = () => { ui.zoom = ui.zoom > 1 ? 1 : 1.8; $('#btnZoom').textContent = ui.zoom > 1 ? '⊖' : '⊕'; layout(); };
   $('#btnBackup').onclick = backup;
@@ -1334,6 +1336,7 @@ function showApp(app) {
   $('#filesPanel').hidden = fin; $('#finPanel').hidden = !fin;
   try { localStorage.setItem('bloom-app', app); } catch (_) {}
   if (fin) Fin.show();
+  else DB.all().then(a => { patients = a.filter(p => !p.deleted); renderList(); });
 }
 async function testMode() {
   patients = await DB.all();

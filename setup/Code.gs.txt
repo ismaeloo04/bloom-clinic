@@ -123,9 +123,10 @@ function sheets_() {
   return { p: ss.getSheetByName('Patients'), f: fin };
 }
 function finRow_(rec) {
-  var t = { line: 'دخل', exp: 'مصروفات', settings: 'إعدادات' }[rec.type] || rec.type || '';
+  var t = { line: 'دخل', pay: 'دفعة على حساب', exp: 'مصروفات', settings: 'إعدادات' }[rec.type] || rec.type || '';
   var desc = '';
-  if (rec.type === 'line') desc = (rec.dn || '') + ' — ' + (rec.total || 0) + (rec.hasLab && rec.lab ? ' (معمل ' + rec.lab + ')' : '');
+  if (rec.type === 'line') desc = (rec.pn ? rec.pn + ' · ' : '') + (rec.dn || '') + ' — ' + (rec.total || 0) + (rec.paid !== undefined && rec.paid !== '' && Number(rec.paid) < Number(rec.total) ? ' (دفع ' + rec.paid + ')' : '') + (rec.hasLab && rec.lab ? ' (معمل ' + rec.lab + ')' : '');
+  if (rec.type === 'pay') desc = (rec.pn || '') + ' — ' + (rec.amount || 0);
   if (rec.type === 'settings') desc = rec.clinicName || '';
   return [t, rec.date || rec.month || '', desc];
 }
